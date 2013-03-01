@@ -1,4 +1,4 @@
-# cs56-languages-german-quiz
+# cs56-languages-vocab-quiz
 
 This is a foreign language quiz that currently tests German vocabulary. 
 
