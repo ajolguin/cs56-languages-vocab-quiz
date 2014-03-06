@@ -10,7 +10,7 @@ This is a foreign language quiz that currently tests German vocabulary. It is ab
 
 * The code for reading in the file is located in the `FileRead` class. As you can see in the constructor, it is currently hard-coded for the one text file included. 
 
-```
+```java
 public FileRead()
 {
 	this.filename = "/text/vocabulary.txt";
