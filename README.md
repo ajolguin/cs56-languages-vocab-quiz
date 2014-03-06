@@ -12,8 +12,10 @@ This is a foreign language quiz that currently tests German vocabulary. It is ab
 
 `
 public FileRead(){
+
 	this.filename = "/text/vocabulary.txt";
 	this.list = new ArrayList<String>();
+
     }
 `
 * The `ForeignVocabWord` class stores a foreign word and its English translation as Strings.
