@@ -6,6 +6,12 @@ This is a foreign language quiz that currently tests German vocabulary. It is ab
 
 ![](http://i.imgur.com/mTfTOD6.png)
 
+project history
+===============
+```
+ W14 | bkiefer13 | TBD | A quiz that is designed to test the user's knowledge on foreign vocabulary
+```
+
 ## Documentation
 
 * The code for reading in the file is located in the `FileRead` class. As you can see in the constructor, it is currently hard-coded for the one text file included. 
