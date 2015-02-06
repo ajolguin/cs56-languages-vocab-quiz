@@ -9,6 +9,9 @@ This is a foreign language quiz that currently tests German vocabulary. It is ab
 project history
 ===============
 ```
+YES | mastergberry | TBD | A quiz that is designed to test the user's knowledge on foreign vocabulary
+```
+```
  W14 | bkiefer13 | TBD | A quiz that is designed to test the user's knowledge on foreign vocabulary
 ```
 
