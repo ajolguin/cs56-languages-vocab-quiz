@@ -32,7 +32,7 @@ public class FileRead
      */
 
     public FileRead(){
-	this.filename = "/text/vocabulary.txt";
+	this.filename = "text/vocabulary.txt";
 	this.list = new ArrayList<String>();
     }
 
@@ -74,30 +74,33 @@ public class FileRead
      *
      *Code borrowed and modified from:
      *@link http://www.rgagnon.com/javadetails/java-0077.html
+     *@link http://www.mkyong.com/java/how-to-read-file-from-java-bufferedinputstream-example/
      *@exception Exception catch any exception reading from file
      */
 
     public void readFromFile(){
-	InputStream is = null;
-	BufferedReader br = null;
-	String line;
+	File file = new File(filename);
+	FileInputStream inStream = null;
+	BufferedInputStream buffer = null;
+	DataInputStream data = null;
+	String line = "";
 	
-	try { 
-	    is = getClass().getResourceAsStream(filename);
-	    br = new BufferedReader(new InputStreamReader(is));
-	    while (null != (line = br.readLine())) {
+	try {
+	    inStream = new FileInputStream(file);	    
+	    buffer = new BufferedInputStream(inStream);
+	    data = new DataInputStream(buffer);
+	    while (data.available() != 0) {
+		line = data.readLine();
 		list.add(line);
-	    }
-	}
-	catch (Exception e) {
+	    }	    
+	} catch (IOException e) {
 	    e.printStackTrace();
-	}
-	finally {
+	} finally {
 	    try {
-		if (br != null) br.close();
-		if (is != null) is.close();
-	    }
-	    catch (IOException e) {
+		inStream.close();
+		buffer.close();
+		data.close();
+	    } catch (IOException e) {
 		e.printStackTrace();
 	    }
 	}

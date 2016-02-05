@@ -23,7 +23,7 @@ public class ForeignVocabQuizGUI {
     private String userGuess;
     private String word;
     private String counterPart;
-    private int totalQuestions;
+    private int totalQuestions = 1;
     private int questionsCorrect;
     private int numOfGuesses;
 
