@@ -1,0 +1,21 @@
+<application>
+  <component name="CodeFoldingSettings">
+    <option name="COLLAPSE_IMPORTS" value="false" />
+  </component>
+  <component name="JavaCodeFoldingSettings">
+    <option name="collapseAccessors" value="true" />
+    <option name="collapseAnnotations" value="true" />
+    <option name="collapseAnonymousClasses" value="true" />
+    <option name="collapseInnerClasses" value="true" />
+    <option name="inlineParameterNamesForLiteralCallArguments" value="true" />
+    <option name="COLLAPSE_ACCESSORS" value="true" />
+    <option name="COLLAPSE_INNER_CLASSES" value="true" />
+    <option name="COLLAPSE_ANONYMOUS_CLASSES" value="true" />
+    <option name="COLLAPSE_ANNOTATIONS" value="true" />
+    <option name="INLINE_PARAMETER_NAMES_FOR_LITERAL_CALL_ARGUMENTS" value="true" />
+  </component>
+  <component name="XmlFoldingSettings">
+    <option name="collapseXmlTags" value="true" />
+    <option name="COLLAPSE_XML_TAGS" value="true" />
+  </component>
+</application>
