@@ -50,7 +50,7 @@
     <delete dir="temp" quiet="true" />
   </target>
 
-  <target name="test" depends="compile">
+  <target name="test" depends="compile" description="test my Main Class">
 
     <junit haltonerror="no" haltonfailure="no">
       <classpath refid="project.class.path"/>

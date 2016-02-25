@@ -9,7 +9,8 @@ import java.util.*;
  *
  *
  *@author Dane Pitkin
- *@version Mantis Ticket 0000273, CS56, S11, choice points 3
+ *@author Yessenia Valencia
+ *@version Mantis Ticket 0000341, CS56, W16, choice points 3
  *@see ForeignVocabQuizGUI
  */
 
@@ -68,7 +69,7 @@ public class ForeignVocabQuiz{
     }
 
     /**Get a random index from <code>vocabList</code>.
-     *@param list the list of ForeignVocabWords.
+     *@param aList the list of ForeignVocabWords.
      *@return randNum a random number within the 
      *boundaries of the array indices.
      */
