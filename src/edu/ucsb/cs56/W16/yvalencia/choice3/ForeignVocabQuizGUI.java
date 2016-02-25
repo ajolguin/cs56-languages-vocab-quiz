@@ -16,7 +16,8 @@ import javax.swing.*;
 public class ForeignVocabQuizGUI {
 
     private final static String newLine = "\n";
-	
+   
+    private JMenuBar menuBar; 
     private JTextField field;
     private JLabel label3; //arbitrary name, should fix it
     private ForeignVocabQuiz quiz;
@@ -39,17 +40,30 @@ public class ForeignVocabQuizGUI {
      */
 
     public void go(){
-	JFrame frame = new JFrame();
-	JMenuBar menuBar = new JMenuBar();
+	JFrame frame = new JFrame("The Language Quiz~"); 
+	menuBar = new JMenuBar();
 	JMenu fileMenu = new JMenu("Language");
 	JMenuItem german = new JMenuItem("German");
+	JMenuItem spanish = new JMenuItem("Spanish");
+	JMenuItem french = new JMenuItem("French");
+	JMenuItem mandarin = new JMenuItem("Mandarin");
+	JMenuItem russian = new JMenuItem("Russian");
+	JMenuItem japanese = new JMenuItem("Japanese");
+       
 	JTextArea text = new JTextArea(10,35);
 
 	field = new JTextField(20);
 
+	frame.setJMenuBar(menuBar);
 	menuBar.add(fileMenu);
-	setJMenuBar(menuBar);
-
+	fileMenu.add(german);
+	fileMenu.add(spanish);
+	fileMenu.add(french);
+	fileMenu.add(mandarin);
+	fileMenu.add(russian);
+	fileMenu.add(japanese);
+	
+	JLabel iconLabel = new JLabel(); 
 	JLabel label = new JLabel("Your answer: ");
 	JLabel label2 = new JLabel();
 	label3 = new JLabel();
@@ -73,13 +87,17 @@ public class ForeignVocabQuizGUI {
 	text.append("This is a vocabulary quiz for a foreign language." + newLine);
 	text.append("You have three chances per word." + newLine);
 	text.append("We'll begin now." + newLine);
+	
+	ImageIcon imageIcon1 = new ImageIcon(this.getClass().getResource("wrong.gif"));
+	ImageIcon imageIcon2 = new ImageIcon(this.getClass().getResource("correct.gif"));
+	ImageIcon autoIcon = new ImageIcon(this.getClass().getResource("welcome.gif"));
+	iconLabel.setIcon(autoIcon); 
+	
 
 	field.requestFocus();
 	field.addActionListener(new Listener());
 	german.addActionListener(new Listener());
 	button.addActionListener(new Listener());
-
-
 
 	panel2.add(label2);
 	panel.add(label);
@@ -88,12 +106,12 @@ public class ForeignVocabQuizGUI {
 	panel.add(label3);
 	panel3.add(label4);
 	panel3.add(scroller);
-
+	panel.add(iconLabel);
+ 
 	frame.getContentPane().add(BorderLayout.NORTH, panel2);
 	frame.getContentPane().add(BorderLayout.CENTER, panel);
 	frame.getContentPane().add(BorderLayout.SOUTH, panel3);
-
-	frame.setSize(450,300);
+	frame.setSize(800, 700); 
 	frame.setVisible(true);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -114,7 +132,7 @@ public class ForeignVocabQuizGUI {
 		questionsCorrect++;
 	    totalQuestions++;
 	}
-
+	
 	if(!quiz.listNotEmpty()){
 	    label4.setText("Your score is " + questionsCorrect + "/" + totalQuestions + ".");
 	    label2.setText("Finished!");
@@ -122,7 +140,7 @@ public class ForeignVocabQuizGUI {
 	    text.append(newLine + "Thanks for playing. =)");
 	}
     }
-
+    
     class Listener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 	    userGuess = field.getText();
@@ -132,8 +150,11 @@ public class ForeignVocabQuizGUI {
 		else{
 		    if (numOfGuesses == 2)
 			label3.setText("The correct answer was: " + counterPart);
-		    else
+		    else{
 			label3.setText("False");
+			
+		        
+		    }
 		    numOfGuesses++;
 		}
 	    }
