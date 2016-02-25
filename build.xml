@@ -2,7 +2,7 @@
 <project default="compile">
 
   <!-- build.xml for Mantis ticket 0000341
-       for: Choice Points 2, S11, CS56
+       for: Choice Points 2, W16, CS56
        name: Yessenia Valencia -->
 
   <property environment="env"/> <!-- load the environment variables -->
@@ -11,10 +11,10 @@
 
 
   <property name="course" value="cs56" />
-  <property name="quarter" value="S11" />
+  <property name="quarter" value="W16" />
   <property name="mainClass" value="ForeignVocabQuizGUI" />
   <property name="mantisticket" value="0000341" />
-  <property name="fullPkg" value="edu.ucsb.cs56.S11.dpitkin.choice3" />
+  <property name="fullPkg" value="edu.ucsb.cs56.W16.yvalencia.choice3" />
   <property name="projectName" value="${course}_${quarter}_${mantisticket}" />
   <property name="projectPath" value="${course}/${quarter}/issues/${mantisticket}" />
   <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" />
