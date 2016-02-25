@@ -1,4 +1,4 @@
-//package edu.ucsb.cs56.S11.dpitkin.choice3.test;
+//package edu.ucsb.cs56.W16.yvalencia.choice3.test;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -8,21 +8,22 @@ import static org.junit.Assert.assertEquals;
  *
  *
  *@author Dane Pitkin
- *@version Choice Points 2 for CS56, S11
+ *@author Yessenia Valencia
+ *@version Choice Points 2 for CS56, W16
  *@see ForeignVocabWord
  */
 
 public class ForeignVocabWordTest{
-    
+
     /**Test the constructor
      */
-  
+
     @Test public void testConstructor(){
 	ForeignVocabWord word = new ForeignVocabWord("Hello", "Hallo");
 	assertEquals("Hallo", word.getForeignWord());
 	assertEquals("Hello", word.getEnglishWord());
     }
-    
+
     /**Test the .equals() methods
      */
 
