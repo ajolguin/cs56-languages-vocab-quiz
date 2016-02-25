@@ -16,7 +16,7 @@ import javax.swing.*;
 public class ForeignVocabQuizGUI {
 
     private final static String newLine = "\n";
-
+	
     private JTextField field;
     private JLabel label3; //arbitrary name, should fix it
     private ForeignVocabQuiz quiz;
@@ -40,10 +40,15 @@ public class ForeignVocabQuizGUI {
 
     public void go(){
 	JFrame frame = new JFrame();
+	JMenuBar menuBar = new JMenuBar();
+	JMenu fileMenu = new JMenu("Language");
+	JMenuItem german = new JMenuItem("German");
 	JTextArea text = new JTextArea(10,35);
 
 	field = new JTextField(20);
 
+	menuBar.add(fileMenu);
+	setJMenuBar(menuBar);
 
 	JLabel label = new JLabel("Your answer: ");
 	JLabel label2 = new JLabel();
@@ -71,7 +76,7 @@ public class ForeignVocabQuizGUI {
 
 	field.requestFocus();
 	field.addActionListener(new Listener());
-
+	german.addActionListener(new Listener());
 	button.addActionListener(new Listener());
 
 
@@ -113,7 +118,7 @@ public class ForeignVocabQuizGUI {
 	if(!quiz.listNotEmpty()){
 	    label4.setText("Your score is " + questionsCorrect + "/" + totalQuestions + ".");
 	    label2.setText("Finished!");
-	    label3.setText(" ");
+	    label3.setText("There are no other words in your file!");
 	    text.append(newLine + "Thanks for playing. =)");
 	}
     }
