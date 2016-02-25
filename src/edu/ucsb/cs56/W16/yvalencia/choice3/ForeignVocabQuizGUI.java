@@ -6,9 +6,9 @@ import javax.swing.*;
 
 /**
    A GUI for ForeignVocabQuiz.
-   
-   @author Dane Pitkin
-   @version Mantis Ticket 0000341, CS56, S11, choice points 3
+
+   @author Yessenia Valencia
+   @version Mantis Ticket 0000341, CS56, W16, choice points 3
    @see ForeignVocabQuiz
 */
 
@@ -29,7 +29,7 @@ public class ForeignVocabQuizGUI {
 
     /**Constructor
      */
-    
+
     public ForeignVocabQuizGUI(){
 	quiz = new ForeignVocabQuiz();
     }
@@ -63,7 +63,7 @@ public class ForeignVocabQuizGUI {
 
 	text.setLineWrap(true);
 	text.setEditable(false);
-	
+
 	text.append("Welcome!" + newLine);
 	text.append("This is a vocabulary quiz for a foreign language." + newLine);
 	text.append("You have three chances per word." + newLine);
@@ -91,8 +91,8 @@ public class ForeignVocabQuizGUI {
 	frame.setSize(450,300);
 	frame.setVisible(true);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
-	
+
+
 
 	while(quiz.listNotEmpty()){
 	    label4.setText("Your score is " + questionsCorrect + "/" + totalQuestions + ".");
@@ -107,7 +107,7 @@ public class ForeignVocabQuizGUI {
 
 	    if (quiz.checkUserGuess(userGuess))
 		questionsCorrect++;
-	    totalQuestions++;    
+	    totalQuestions++;
 	}
 
 	if(!quiz.listNotEmpty()){
@@ -123,7 +123,7 @@ public class ForeignVocabQuizGUI {
 	    userGuess = field.getText();
 	    if(numOfGuesses < 3){
 		if(quiz.checkUserGuess(userGuess))
-		    label3.setText("Correct!");		
+		    label3.setText("Correct!");
 		else{
 		    if (numOfGuesses == 2)
 			label3.setText("The correct answer was: " + counterPart);
@@ -136,7 +136,7 @@ public class ForeignVocabQuizGUI {
 	    field.selectAll();
 	}
     }
-   
+
    public static void main(String [] args){
 	ForeignVocabQuizGUI gui = new ForeignVocabQuizGUI();
 	gui.go();
