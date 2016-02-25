@@ -88,9 +88,9 @@ public class ForeignVocabQuizGUI {
 	text.append("You have three chances per word." + newLine);
 	text.append("We'll begin now." + newLine);
 	
-	ImageIcon imageIcon1 = new ImageIcon(this.getClass().getResource("wrong.gif"));
-	ImageIcon imageIcon2 = new ImageIcon(this.getClass().getResource("correct.gif"));
-	ImageIcon autoIcon = new ImageIcon(this.getClass().getResource("welcome.gif"));
+	ImageIcon imageIcon1 = new ImageIcon(this.getClass().getResource("/images/wrong.gif"));
+	ImageIcon imageIcon2 = new ImageIcon(this.getClass().getResource("/images/correct.gif"));
+	ImageIcon autoIcon = new ImageIcon(this.getClass().getResource("/images/welcome.gif"));
 	iconLabel.setIcon(autoIcon); 
 	
 
