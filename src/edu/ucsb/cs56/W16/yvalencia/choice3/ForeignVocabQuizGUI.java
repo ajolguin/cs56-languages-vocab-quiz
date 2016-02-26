@@ -63,7 +63,7 @@ public class ForeignVocabQuizGUI {
 	fileMenu.add(russian);
 	fileMenu.add(japanese);
 	
-	JLabel iconLabel = new JLabel(); 
+	//JLabel iconLabel = new JLabel(); 
 	JLabel label = new JLabel("Your answer: ");
 	JLabel label2 = new JLabel();
 	label3 = new JLabel();
@@ -88,15 +88,20 @@ public class ForeignVocabQuizGUI {
 	text.append("You have three chances per word." + newLine);
 	text.append("We'll begin now." + newLine);
 	
-	ImageIcon imageIcon1 = new ImageIcon(this.getClass().getResource("/images/wrong.gif"));
-	ImageIcon imageIcon2 = new ImageIcon(this.getClass().getResource("/images/correct.gif"));
-	ImageIcon autoIcon = new ImageIcon(this.getClass().getResource("/images/welcome.gif"));
-	iconLabel.setIcon(autoIcon); 
+	//ImageIcon imageIcon1 = new ImageIcon(this.getClass().getResource("/images/wrong.gif"));
+	//ImageIcon imageIcon2 = new ImageIcon(this.getClass().getResource("/images/correct.gif"));
+	//ImageIcon autoIcon = new ImageIcon(this.getClass().getResource("images/welcome.gif"));
+	//iconLabel.setIcon(autoIcon); 
 	
 
 	field.requestFocus();
 	field.addActionListener(new Listener());
 	german.addActionListener(new Listener());
+	spanish.addActionListener(new Listener());
+	french.addActionListener(new Listener());
+	mandarin.addActionListener(new Listener()); 
+	russian.addActionListener(new Listener());
+	japanese.addActionListener(new Listener());
 	button.addActionListener(new Listener());
 
 	panel2.add(label2);
@@ -106,8 +111,8 @@ public class ForeignVocabQuizGUI {
 	panel.add(label3);
 	panel3.add(label4);
 	panel3.add(scroller);
-	panel.add(iconLabel);
- 
+	//panel.add(iconLabel);
+	
 	frame.getContentPane().add(BorderLayout.NORTH, panel2);
 	frame.getContentPane().add(BorderLayout.CENTER, panel);
 	frame.getContentPane().add(BorderLayout.SOUTH, panel3);
@@ -151,8 +156,7 @@ public class ForeignVocabQuizGUI {
 		    if (numOfGuesses == 2)
 			label3.setText("The correct answer was: " + counterPart);
 		    else{
-			label3.setText("False");
-			
+			label3.setText("False");			
 		        
 		    }
 		    numOfGuesses++;

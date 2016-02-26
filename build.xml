@@ -2,43 +2,36 @@
 <project default="compile">
 
   <!-- build.xml for Mantis ticket 0000341
-       for: Choice Points 2, W16, CS56
+       for: cs56-languages-vocab-quiz, W16, CS56
        name: Yessenia Valencia -->
 
   <property environment="env"/> <!-- load the environment variables -->
   <property name="webRoot" value="${env.HOME}/public_html/" />
   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}" />
-
-
-  <property name="course" value="cs56" />
-  <property name="quarter" value="W16" />
+  
   <property name="mainClass" value="ForeignVocabQuizGUI" />
-  <property name="mantisticket" value="0000341" />
+  
   <property name="fullPkg" value="edu.ucsb.cs56.W16.yvalencia.choice3" />
-  <property name="projectName" value="${course}_${quarter}_${mantisticket}" />
+  <property name="projectName" value="cs56-languages-vocab-quiz" />
   <property name="projectPath" value="${course}/${quarter}/issues/${mantisticket}" />
   <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" />
   <property name="javadocURL" value="${webBaseUrl}/${projectPath}/javadoc" />
   <property name="jwsDest" value="${webRoot}/${projectPath}/jws"/>
   <property name="jwsURL" value="${webBaseUrl}/${projectPath}/jws"/>
-  <property name="builddir" value="/cs/student/${env.USER}/cs56/choice3/build/text/"/>
-
-  <path id="project.class.path">
-    <pathelement location="build"/>
-    <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
-  </path>
+   
 
   <target name="compile" description="compile my code">
-    <mkdir dir="build" />
-    <copy file="text/vocabulary.txt" todir="${builddir}"/>
-    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source" includeantruntime= "false">
-      <classpath refid="project.class.path"/>
+    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime= "false">
+      <classpath>
+	  <pathelement location = "build"/>
+	  <pathelement location = "/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+      </classpath>
     </javac>
   </target>
 
   <target name="run" depends = "compile" description="run the Main Class program">
-    <java classname="${fullPkg}.${mainClass}" fork="true">
-      <classpath refid="project.class.path"/>
+    <java classname="${mainClass}" fork="true">
+      <classpath "/>
     </java>
   </target>
 
