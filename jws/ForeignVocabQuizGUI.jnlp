@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="0.2 1.0" codebase="http://www.cs.ucsb.edu/~yvalencia/cs56/W16/issues/0000341/jws" href="ForeignVocabQuizGUI.jnlp">
+<jnlp spec="0.2 1.0" codebase="http://www.cs.ucsb.edu/~yvalencia/cs56/W16/cs56-languages-vocab-quiz/jws" href="ForeignVocabQuizGUI.jnlp">
  <information>
-   <title>UCSB CS56 W16 Mantis Ticket 0000341 *Yessenia Valencia* ForeignVocabQuizGUI</title>
+   <title>UCSB CS56 W16 cs56-languages-vocab-quiz *Yessenia Valencia* ForeignVocabQuizGUI</title>
    <vendor>UCSB CS56</vendor>
    <homepage href="." />
-   <description>A Foreign Vocab Quiz GUI</description>
+   <description>A Foreign Vocabulary Quiz GUI</description>
   <icon href="cs56.png" />
   <offline-allowed />
  </information>
  <resources>
   <j2se version="1.3+" />
-  <jar href="cs56_W16_0000341.jar" />
+  <jar href="cs56-languages-vocab-quiz.jar" />
  </resources>
- <application-desc main-class="edu.ucsb.cs56.W16.yvalencia.choice3.ForeignVocabQuizGUI"/>
+ <application-desc main-class="edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz.ForeignVocabQuizGUI"/>
 </jnlp>

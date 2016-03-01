@@ -1,10 +1,10 @@
-package edu.ucsb.cs56.W16.yvalencia.foreignlanguagesvocabquiz;
+package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- *The test class ForeignVocabWordTest, to test theForeign VocabWord class
+ *The test class ForeignVocabWordTest, to test the ForeignVocabWord class
  *
  *
  *@author Dane Pitkin

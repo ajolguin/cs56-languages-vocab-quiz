@@ -1,5 +1,4 @@
 package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
-
 import java.awt.*;
 import javax.swing.*;
 import java.io.*;
