@@ -1,9 +1,9 @@
-package edu.ucsb.cs56.W16.yvalencia.choice3;
+package edu.ucsb.cs56.W16.yvalencia.foreignlanguagesvocabquiz;
+
 
 /**A vocabulary word that holds both the english and foreign versions of the word.
  *
- * @author Yessenia Valencia
- * @version Mantis Ticket 0000341, CS56, W16, choice points 3.
+ * @author Yessenia Valencia ,cs56-languages-vocab-quiz, CS56, W16, foreignlanguagesvicabquiz.
  */
 
 public class ForeignVocabWord{

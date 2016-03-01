@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.W16.yvalencia.choice3;
+package edu.ucsb.cs56.W16.yvalencia.foreignlanguagesvocabquiz;
 
 import java.awt.*;
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.net.*;
 /**A File Reader.
  *@author Dane Pitkin
  *@author Yessenia Valencia
- *@version Mantis Ticket 0000341, CS56, W16, choice points 3.
+ *@version cs56-languages-vocab-quiz, CS56, W16
  *
  *Reads from a .txt file line by line and
  *creates an <code>ArrayList<String></code> list where 
@@ -21,14 +21,12 @@ import java.net.*;
  */
 
 
-public class FileRead 
-{
+public class FileRead {
+    
     private String filename;
     private ArrayList<String> list;
     URL file;
-
-
-
+    
     /** Constructor
      */
 
@@ -37,34 +35,37 @@ public class FileRead
 	this.list = new ArrayList<String>();
     }
 
-
-
+    // public FileRead(String language) {
+    //	this.filename = language + ".txt";
+    //	this.list = new ArrayList<String>(); 
+    //}
+    
     /** Get the list of words.
      *@return list A list of type ArrayList<String>.
      */
-
+    
     public ArrayList<String> getList(){
 	return this.list;
     }
-	    
+    
     /** Get the size of the list.
      *@return list.size() Of type int.
      */
 
-     public int getSizeOfArray(){
-	 return list.size();
-     }
-
-
+    public int getSizeOfArray(){
+	return list.size();
+    }
+    
+    
     /** Gets name of .txt file from the user. 
      *At the moment, it's just hardcoded in.
      *Not good programming syle.
      */
 
     public void getFileName(){
-
+	
 	file = getClass().getResource(filename);
-
+	
     }
 
     /** Reads data from file and stores it in <code>list</code>.
@@ -78,32 +79,30 @@ public class FileRead
      *@link http://www.mkyong.com/java/how-to-read-file-from-java-bufferedinputstream-example/
      *@exception Exception catch any exception reading from file
      */
-
+    
     public void readFromFile(){
-	File file = new File(filename);
-	FileInputStream inStream = null;
-	BufferedInputStream buffer = null;
-	DataInputStream data = null;
-	String line = "";
-	
 	try {
-	    inStream = new FileInputStream(file);	    
-	    buffer = new BufferedInputStream(inStream);
-	    data = new DataInputStream(buffer);
-	    while (data.available() != 0) {
-		line = data.readLine();
+	    File file = new File(filename); 
+	    BufferedReader br = new BufferedReader(new FileReader(file)); 
+	    String line;
+	    while ((line = br.readLine()) != null) {
 		list.add(line);
-	    }	    
-	} catch (IOException e) {
-	    e.printStackTrace();
-	} finally {
-	    try {
-		inStream.close();
-		buffer.close();
-		data.close();
-	    } catch (IOException e) {
-		e.printStackTrace();
 	    }
+	    br.close(); 
 	}
+	
+	catch (IOException e) {
+	    e.printStackTrace();
+	}
+	//	finally {
+	//  try { 
+	//      ;
+	//  }
+	//  catch (IOException e) { 
+	//	e.printStackTrace();   
+	//  }
+	//
     }
+    
+    
 }//end class
