@@ -17,11 +17,13 @@ import javax.swing.*;
 public class ForeignVocabQuizGUI {
 
     private final static String newLine = "\n";
+    private String language;
+    private ForeignVocabQuiz quiz;
+    private JList list; 
+    
     private JTextField textField;
     private JLabel userResult;
     private JLabel yourAnswer; 
-    private ForeignVocabQuiz quiz;
-    private String language; 
     private String userGuess;
     private String word;
     private String counterPart;
@@ -33,7 +35,7 @@ public class ForeignVocabQuizGUI {
      */
 
     public ForeignVocabQuizGUI(){
-	quiz = new ForeignVocabQuiz(language);
+	quiz = new ForeignVocabQuiz();
     }
 
     /**Creates GUI and starts quiz.
@@ -89,14 +91,6 @@ public class ForeignVocabQuizGUI {
 	JPanel eastPanel = new JPanel();
 	JPanel westPanel = new JPanel();
 
-	//BorderLayout background
-	//BorderLayout layout = new BorderLayout();
-	//JPanel background = new JPanel(layout);
-	//background.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-
-	//MyDrawPanel
-	//MyDrawPanel drawPanel = new MyDrawPanel();
-
 	//JScrollPane
 	JScrollPane scroller = new JScrollPane(text);
 	scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -144,11 +138,10 @@ public class ForeignVocabQuizGUI {
 	frame.getContentPane().add(BorderLayout.WEST, westPanel);
 	frame.setSize(700,650);
 	frame.setVisible(true);
-
-	answerButton.addActionListener(new Listener());
+	textField.requestFocus(); 
+	textField.addActionListener(new Listener());
    
 	while(quiz.listNotEmpty()){
-	    boolean status = true; 
 	    totalQuestions++;
 	    yourScore.setText("Your score is " + questionsCorrect + "/" + totalQuestions + "."+ newLine);
 	    numOfGuesses = 0; 
@@ -156,9 +149,9 @@ public class ForeignVocabQuizGUI {
 	    counterPart = quiz.getCounterPart(); 
 	    yourWord.setText("Your word is: " + word + newLine); 
 	    
-	    while((quiz.checkUserGuess(userGuess) == false)&&(status)){
+	    while(quiz.checkUserGuess(userGuess) == false){
 		if(numOfGuesses == 3)
-		    status = false; 
+		    break; 
 	    }
 	    if(quiz.checkUserGuess(userGuess))
 		questionsCorrect++;    
@@ -202,8 +195,39 @@ public class ForeignVocabQuizGUI {
     }
     **/
 
-    // public String getLanguage() {
+    /* public void pickLanguage() {
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
+	panel.setBackground(Color.darkGray);
+	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); 
+	JButton german = new JButton("German");
+	JButton spanish = new JButton("Spanish");
+	JButton french = new JButton("French");
+	JButton japanese = new JButton("Japanese");
+	JButton russian = new JButton("Russian");
+
+	german.addActionListener(new buttonListener());
+	spanish.addActionListener(new buttonListener());
+	french.addActionListener(new buttonListener());
+	japanese.addActionListener(new buttonListener());
+	russian.addActionListener(new buttonListener());
 	
+	panel.add(german);
+	panel.add(spanish);
+	panel.add(french);
+	panel.add(russian);
+	panel.add(japanese);
+	frame.getContentPane().add(BorderLayout.CENTER, panel);
+	frame.setSize(400,400);
+	frame.setVisible(true);
+    }
+
+    class buttonListener implements ActionListener {
+	public void actionPerformed(ActionEvent event) {
+	    language = getLabel();
+	}
+    }
+    */
     
     public static void main(String [] args){
 	ForeignVocabQuizGUI gui = new ForeignVocabQuizGUI();
