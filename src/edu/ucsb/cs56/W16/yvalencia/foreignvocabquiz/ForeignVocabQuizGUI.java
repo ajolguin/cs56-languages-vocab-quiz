@@ -19,7 +19,9 @@ public class ForeignVocabQuizGUI {
     private final static String newLine = "\n";
     private JTextField textField;
     private JLabel userResult;
+    private JLabel yourAnswer; 
     private ForeignVocabQuiz quiz;
+    private String language; 
     private String userGuess;
     private String word;
     private String counterPart;
@@ -31,7 +33,7 @@ public class ForeignVocabQuizGUI {
      */
 
     public ForeignVocabQuizGUI(){
-	quiz = new ForeignVocabQuiz();
+	quiz = new ForeignVocabQuiz(language);
     }
 
     /**Creates GUI and starts quiz.
@@ -69,11 +71,11 @@ public class ForeignVocabQuizGUI {
 	textField = new JTextField(20);
 
 	//JLabel
-	JLabel yourAnswer = new JLabel("Your answer: " + userGuess + newLine);
-	JLabel yourWord = new JLabel("Your word is: " + word + newLine);
-	userResult = new JLabel(newLine);
+	yourAnswer = new JLabel(); 
+	JLabel yourWord = new JLabel();
+	userResult = new JLabel();
 	JLabel yourScore = new JLabel("Your score is " + questionsCorrect + "/" + totalQuestions + "."+ newLine);
-
+	
 	//JButtons
 	JButton answerButton = new JButton("Answer");
 	JButton hintButton = new JButton("Hint!");
@@ -93,7 +95,7 @@ public class ForeignVocabQuizGUI {
 	//background.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
 	//MyDrawPanel
-	MyDrawPanel drawPanel = new MyDrawPanel();
+	//MyDrawPanel drawPanel = new MyDrawPanel();
 
 	//JScrollPane
 	JScrollPane scroller = new JScrollPane(text);
@@ -127,14 +129,14 @@ public class ForeignVocabQuizGUI {
 	centerPanel.add(textField);
 	centerPanel.add(answerButton);
 	centerPanel.add(userResult);
-	centerPanel.add(yourScore);
+     	centerPanel.add(yourScore);
 	southPanel.add(scroller);
 	eastPanel.add(hintButton);
 	eastPanel.add(skipButton);
 
 	// getContentPane()
 	//frame.getContentPane().add(background);
-	frame.getContentPane().add(BorderLayout.WEST, drawPanel);
+	//frame.getContentPane().add(BorderLayout.WEST, drawPanel);
 	frame.getContentPane().add(BorderLayout.NORTH, northPanel);
 	frame.getContentPane().add(BorderLayout.CENTER, centerPanel);
 	frame.getContentPane().add(BorderLayout.SOUTH, southPanel);
@@ -143,23 +145,26 @@ public class ForeignVocabQuizGUI {
 	frame.setSize(700,650);
 	frame.setVisible(true);
 
+	answerButton.addActionListener(new Listener());
+   
 	while(quiz.listNotEmpty()){
-	    yourScore.setText("Your score is " + questionsCorrect + "/" + totalQuestions + ".");
-	    numOfGuesses = 0;
-	    word = quiz.getRandomWordFromList();
-	    counterPart = quiz.getCounterPart();
-	    yourWord.setText("Your word is: " + word);
-	    while(quiz.checkUserGuess(userGuess) == false){
-		if(numOfGuesses == 3)
-		    break;
-	    }
-
-	    if (quiz.checkUserGuess(userGuess))
-		questionsCorrect++;
+	    boolean status = true; 
 	    totalQuestions++;
+	    yourScore.setText("Your score is " + questionsCorrect + "/" + totalQuestions + "."+ newLine);
+	    numOfGuesses = 0; 
+	    word = quiz.getRandomWordFromList();
+	    counterPart = quiz.getCounterPart(); 
+	    yourWord.setText("Your word is: " + word + newLine); 
+	    
+	    while((quiz.checkUserGuess(userGuess) == false)&&(status)){
+		if(numOfGuesses == 3)
+		    status = false; 
+	    }
+	    if(quiz.checkUserGuess(userGuess))
+		questionsCorrect++;    
 	}
-
-
+	
+	    
 	if(!quiz.listNotEmpty()){
 	    yourScore.setText("Your score is " + questionsCorrect + "/" + totalQuestions + "."+ newLine);
 	    yourWord.setText("Finished!" + newLine);
@@ -170,32 +175,36 @@ public class ForeignVocabQuizGUI {
 
     class Listener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
-	    userGuess = textField.getText();
-	    if(numOfGuesses < 3){
-		if(quiz.checkUserGuess(userGuess))
-		    userResult.setText("Correct!");
-		else{
-		    if (numOfGuesses == 2)
-			userResult.setText("The correct answer was: " + counterPart);
-		    else{
-			userResult.setText("False");
-		    }
-		    numOfGuesses++;
-		}
+	    userGuess = textField.getText(); 
+	    yourAnswer.setText("Your answer: " + userGuess + newLine);
+	    
+	    if(quiz.checkUserGuess(userGuess))
+		userResult.setText("Correct!" + newLine);
+	    else {
+		if (numOfGuesses == 2) 
+		    userResult.setText("The correct answer was: " + counterPart + newLine); 
+		else
+		    userResult.setText("False" + newLine); 
+		numOfGuesses++;
 	    }
+	    
 	    textField.requestFocus();
 	    textField.selectAll();
 	}
     }
+	
 
-
-    class MyDrawPanel extends JPanel{
+    /**class MyDrawPanel extends JPanel{
 	public void paintComponent(Graphics g) {
 	    Image image = new ImageIcon("welcome.gif").getImage();
 	    g.drawImage(image, 3, 4, this);
 	}
     }
+    **/
 
+    // public String getLanguage() {
+	
+    
     public static void main(String [] args){
 	ForeignVocabQuizGUI gui = new ForeignVocabQuizGUI();
 	gui.go();

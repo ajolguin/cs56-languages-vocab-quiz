@@ -7,7 +7,7 @@
 
   <property environment="env"/> <!-- load the environment variables -->
   <property name="webRoot" value="${env.HOME}/public_html/" />
-  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}" />
+  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/" />
 
 
   <property name="course" value="cs56" />
@@ -29,7 +29,9 @@
 
   <target name="compile" description="compile my code">
     <mkdir dir="build" />
-    <copy file="text/german.txt" todir="${builddir}"/>
+    <copy todir="${builddir}" >
+      <fileset dir="text/"/>
+    </copy>
     <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime="false">
       <classpath refid="project.class.path"/>
     </javac>
@@ -37,6 +39,12 @@
 
   <target name="run" depends = "compile" description="run the Main Class program">
     <java classname="${fullPkg}.${mainClass}" fork="true">
+      <classpath refid="project.class.path"/>
+    </java>
+  </target>
+
+  <target name="output" depends = "compile" description= "output from different classes">
+    <java classname="${fullPkg}.ForeignVocabOutput" fork="true">
       <classpath refid="project.class.path"/>
     </java>
   </target>
@@ -174,8 +182,8 @@
   </target>
 
   <target name="jws" depends="compile,jar" description="publish java web start">
-    <delete dir="${webRoot}/${projectName}/jws"/>
-    <mkdir dir="${webRoot}/${projectName}/jws"/>
+    <delete dir="${webRoot}/${projectPath}/jws"/>
+    <mkdir dir="${webRoot}/${projectPath}/jws"/>
     <copy todir="${jwsDest}" file="dist/${projectName}.jar"/>
     <copy todir="${jwsDest}">
       <fileset dir="jws" includes="*.html"/>
