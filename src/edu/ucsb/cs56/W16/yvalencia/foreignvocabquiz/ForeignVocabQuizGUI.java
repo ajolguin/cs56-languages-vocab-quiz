@@ -17,7 +17,7 @@ import javax.swing.*;
 public class ForeignVocabQuizGUI {
 
     private final static String newLine = "\n";
-    private String language;
+    private String language = "german";
     private ForeignVocabQuiz quiz;
     private JList list; 
     
@@ -35,7 +35,7 @@ public class ForeignVocabQuizGUI {
      */
 
     public ForeignVocabQuizGUI(){
-	quiz = new ForeignVocabQuiz();
+	quiz = new ForeignVocabQuiz(language);
     }
 
     /**Creates GUI and starts quiz.
@@ -70,7 +70,7 @@ public class ForeignVocabQuizGUI {
 	Font bigFont = new Font("serif", Font.BOLD, 14);
 
 	//JTextField
-	textField = new JTextField(20);
+	textField = new JTextField(1);
 
 	//JLabel
 	yourAnswer = new JLabel(); 
@@ -86,10 +86,15 @@ public class ForeignVocabQuizGUI {
 
 	//JPanels
 	JPanel centerPanel = new JPanel();
+	centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS)); 
   	JPanel northPanel = new JPanel();
+	northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
 	JPanel southPanel = new JPanel();
+	southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS)); 
 	JPanel eastPanel = new JPanel();
+	eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
 	JPanel westPanel = new JPanel();
+	westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS)); 
 
 	//JScrollPane
 	JScrollPane scroller = new JScrollPane(text);
@@ -140,8 +145,9 @@ public class ForeignVocabQuizGUI {
 	frame.setVisible(true);
 	textField.requestFocus(); 
 	textField.addActionListener(new Listener());
+	answerButton.addActionListener(new Listener()); 
    
-	while(quiz.listNotEmpty()){
+	while(quiz.listNotEmpty() == true){
 	    totalQuestions++;
 	    yourScore.setText("Your score is " + questionsCorrect + "/" + totalQuestions + "."+ newLine);
 	    numOfGuesses = 0; 
