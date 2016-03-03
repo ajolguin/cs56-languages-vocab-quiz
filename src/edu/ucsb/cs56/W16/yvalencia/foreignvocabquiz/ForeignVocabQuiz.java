@@ -29,19 +29,19 @@ public class ForeignVocabQuiz{
      *Also reads file that was given by user.
      */
 
-    public ForeignVocabQuiz(){//sets up application
-	vocabList = new ArrayList<ForeignVocabWord>();
-	file = new FileRead();
-	file.getFileName();
-	file.readFromFile();
-	setUpVocabList();
-    }
+    //    public ForeignVocabQuiz(){//sets up application
+    //vocabList = new ArrayList<ForeignVocabWord>();
+    //file = new FileRead();
+    //file.getFileName();
+    // file.readFromFile();
+    // setUpVocabList();
+    // }
 
     public ForeignVocabQuiz(String language) {
 	vocabList = new ArrayList<ForeignVocabWord>();
 	file = new FileRead(language);
-	file.getFileName();
-	file.readFromFile();
+	//file.getFileName();
+	//file.readFromFile();
 	setUpVocabList();
     }
 

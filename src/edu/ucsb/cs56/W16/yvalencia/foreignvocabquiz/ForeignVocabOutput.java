@@ -14,15 +14,15 @@ public class ForeignVocabOutput {
 	spanish = new FileRead("spanish");
 	
 	System.out.println("Print words in spanish.txt");
-	spanish.readFromFile();
+	spanish.printFromFile();
 	
 	System.out.println("Print words in german.txt");
-	german.readFromFile();
+	german.printFromFile();
 	
-	spanishQuiz = new ForeignVocabQuiz("spanish");
+	//	spanishQuiz = new ForeignVocabQuiz("spanish");
 
 	
-	germanQuiz = new ForeignVocabQuiz("german");
+	//germanQuiz = new ForeignVocabQuiz("german");
         
     }
 

@@ -21,32 +21,35 @@ import java.net.*;
 
 
 public class FileRead {
-
+    
     private String filename;
     private ArrayList<String> list;
-    URL file;
+    private URL fileURL; 
+    private File fileFile;
     
     /** Constructor
      */
     
-    public FileRead(){
-	this.filename = "text/german.txt";
-	this.list = new ArrayList<String>();
-    }
+    //    public FileRead(){
+    //	this.list = new ArrayList<String>();
+    //	setFileName(); 
+    //}
     
     public FileRead(String language) {
-    	this.filename = "text/" + language + ".txt";
-  	this.list = new ArrayList<String>();
+	this.filename =  "" + language + ".txt";
+	this.list = new ArrayList<String>();
+	this.fileURL = getClass().getResource(filename); 
+	this.fileFile = new File(fileURL.getFile()); 
     }
     
     /** Get the list of words.
      *@return list A list of type ArrayList<String>.
      */
-
+    
     public ArrayList<String> getList(){
 	return this.list;
     }
-
+    
     /** Get the size of the list.
      *@return list.size() Of type int.
      */
@@ -54,19 +57,32 @@ public class FileRead {
     public int getSizeOfArray(){
 	return list.size();
     }
-
-
+    
+    
     /** Gets name of .txt file from the user.
      *At the moment, it's just hardcoded in.
      *Not good programming syle.
      */
-
-    public void getFileName(){
-
-	file = getClass().getResource(filename);
-
+    
+    public String getFileName(){
+	return filename; 
     }
 
+    public URL getFileURL() {
+	return fileURL;
+    }
+
+    public File getFiletoRead() {
+	return fileFile;
+    }
+
+    public void setFileName(String newName) {
+	filename = "" + newName + ".txt"; ;
+	fileURL = getClass().getResource(filename);
+	fileFile = new File(fileURL.getFile()); 
+    }
+
+    
     /** Reads data from file and stores it in <code>list</code>.
      *
      *Each line in the .txt file is one index of <code>list</code>.
@@ -81,8 +97,7 @@ public class FileRead {
 
     public void readFromFile(){
 	try {
-	    File file = new File(filename);
-	    BufferedReader br = new BufferedReader(new FileReader(file)); 
+	    BufferedReader br = new BufferedReader(new FileReader(fileFile)); 
 	    String line = "";
 	    while ((line = br.readLine()) != null) 
 		list.add(line);
@@ -99,6 +114,21 @@ public class FileRead {
 	//  catch (IOException e) {
 	//e.printStackTrace();
 	//  }
+    }
+    public void printFromFile(){
+	try {
+	    BufferedReader br = new BufferedReader(new FileReader(fileFile));
+	    String line = "";
+	    while ((line = br.readLine()) != null) {
+		System.out.println(line);
+	    }
+	    br.close();
+	}
+	catch (IOException e) {
+	    e.printStackTrace();
+	    System.out.println("FileRead readFromFile() not working");
+	}
+	
     }
 }
     

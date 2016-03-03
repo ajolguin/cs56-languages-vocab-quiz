@@ -70,7 +70,7 @@ public class ForeignVocabQuizGUI {
 	Font bigFont = new Font("serif", Font.BOLD, 14);
 
 	//JTextField
-	textField = new JTextField(1);
+	textField = new JTextField(20);
 
 	//JLabel
 	yourAnswer = new JLabel(); 
@@ -145,18 +145,10 @@ public class ForeignVocabQuizGUI {
 	frame.setVisible(true);
 	textField.requestFocus(); 
 	textField.addActionListener(new Listener());
-<<<<<<< HEAD
-<<<<<<< HEAD
 	answerButton.addActionListener(new Listener()); 
    
-	while(quiz.listNotEmpty() == true){
-=======
-
-=======
-   
->>>>>>> dde86a725c5b9fdef6934b8f4f9ac2eba4254e91
 	while(quiz.listNotEmpty()){
->>>>>>> c32beb89a17f6f91014de4bea558d8052504e4a4
+	    
 	    totalQuestions++;
 	    yourScore.setText("Your score is " + questionsCorrect + "/" + totalQuestions + "."+ newLine);
 	    numOfGuesses = 0; 
@@ -180,7 +172,7 @@ public class ForeignVocabQuizGUI {
 	    text.append(newLine + "Thanks for playing. =)");
 	}
     }
-
+    
     class Listener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 	    userGuess = textField.getText(); 
@@ -200,53 +192,10 @@ public class ForeignVocabQuizGUI {
 	    textField.selectAll();
 	}
     }
-	
-
-    /**class MyDrawPanel extends JPanel{
-	public void paintComponent(Graphics g) {
-	    Image image = new ImageIcon("welcome.gif").getImage();
-	    g.drawImage(image, 3, 4, this);
-	}
-    }
-    **/
-
-    /* public void pickLanguage() {
-	JFrame frame = new JFrame();
-	JPanel panel = new JPanel();
-	panel.setBackground(Color.darkGray);
-	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); 
-	JButton german = new JButton("German");
-	JButton spanish = new JButton("Spanish");
-	JButton french = new JButton("French");
-	JButton japanese = new JButton("Japanese");
-	JButton russian = new JButton("Russian");
-
-	german.addActionListener(new buttonListener());
-	spanish.addActionListener(new buttonListener());
-	french.addActionListener(new buttonListener());
-	japanese.addActionListener(new buttonListener());
-	russian.addActionListener(new buttonListener());
-	
-	panel.add(german);
-	panel.add(spanish);
-	panel.add(french);
-	panel.add(russian);
-	panel.add(japanese);
-	frame.getContentPane().add(BorderLayout.CENTER, panel);
-	frame.setSize(400,400);
-	frame.setVisible(true);
-    }
-
-    class buttonListener implements ActionListener {
-	public void actionPerformed(ActionEvent event) {
-	    language = getLabel();
-	}
-    }
-    */
     
     public static void main(String [] args){
 	ForeignVocabQuizGUI gui = new ForeignVocabQuizGUI();
 	gui.go();
     }
-
+    
 }//end class
