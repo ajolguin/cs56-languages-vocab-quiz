@@ -1,4 +1,5 @@
 package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
+
 import java.awt.*;
 import javax.swing.*;
 import java.io.*;
@@ -25,20 +26,20 @@ public class FileRead {
     private String filename;
     private ArrayList<String> list;
     URL file;
-    
+
     /** Constructor
      */
-    
+
     public FileRead(){
-	this.filename = "text/german.txt";
+	this.filename = "text/vocabulary.txt";
 	this.list = new ArrayList<String>();
     }
-    
-    public FileRead(String language) {
-    	this.filename = "text/" + language + ".txt";
-  	this.list = new ArrayList<String>();
-    }
-    
+
+    // public FileRead(String language) {
+    //	this.filename = language + ".txt";
+    //	this.list = new ArrayList<String>();
+    //}
+
     /** Get the list of words.
      *@return list A list of type ArrayList<String>.
      */
@@ -50,7 +51,7 @@ public class FileRead {
     /** Get the size of the list.
      *@return list.size() Of type int.
      */
-    
+
     public int getSizeOfArray(){
 	return list.size();
     }
@@ -82,23 +83,26 @@ public class FileRead {
     public void readFromFile(){
 	try {
 	    File file = new File(filename);
-	    BufferedReader br = new BufferedReader(new FileReader(file)); 
-	    String line = "";
-	    while ((line = br.readLine()) != null) 
+	    BufferedReader br = new BufferedReader(new FileReader(file));
+	    String line;
+	    while ((line = br.readLine()) != null) {
 		list.add(line);
-	    br.close(); 
+	    }
+	    br.close();
 	}
+
 	catch (IOException e) {
 	    e.printStackTrace();
-	    System.out.println("FileRead readFromFile() not working"); 
 	}
-	//finally {
+	//	finally {
 	//  try {
-	//	br.close();
+	//      ;
 	//  }
 	//  catch (IOException e) {
-	//e.printStackTrace();
+	//	e.printStackTrace();
 	//  }
+	//
     }
-}
-    
+
+
+}//end class
