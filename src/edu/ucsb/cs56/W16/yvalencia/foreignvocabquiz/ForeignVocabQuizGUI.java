@@ -174,7 +174,8 @@ public class ForeignVocabQuizGUI {
     }
     
     public void quizGUI() {
-	while(quiz.listNotEmpty()) { 
+	while(quiz.listNotEmpty()) {
+	    yourScore.setText("Your current score is " + questionsCorrect + "/" + totalQuestions + "!" + newLine); 
 	    totalQuestions++; 
 	    numOfGuesses = 0; 
 	    
