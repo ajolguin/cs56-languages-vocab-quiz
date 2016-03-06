@@ -7,7 +7,7 @@ import javax.swing.*;
 
 /**
    A GUI for ForeignVocabQuiz.
-
+   
    @author Yessenia Valencia
    @version cs56-languages-vocab-quiz, CS56, W16
    @see ForeignVocabQuiz
@@ -15,46 +15,46 @@ import javax.swing.*;
 
 
 public class ForeignVocabQuizGUI {
-
-    private final static String newLine = "\n";
-    private String language = "german";
-    private ForeignVocabQuiz quiz;
-    private JList list; 
     
-    private JTextField textField;
-    private JLabel userResult;
-    private JLabel yourAnswer; 
-    private String userGuess;
-    private String word;
+    private final static String newLine = "\n";
+    
+    // for quizGUI and from ForeignVocabQuiz
+    private ForeignVocabQuiz quiz;
+    private JLabel yourGuess; 
+    private JLabel result; 
+    private JLabel quizWord; 
+    private JLabel yourScore; 
+    private String language; 
+    private String userGuess; 
+    private String word; 
     private String counterPart;
-    private int totalQuestions;
-    private int questionsCorrect;
-    private int numOfGuesses;
-
-    /**Constructor
-     */
-
-    public ForeignVocabQuizGUI(){
-	quiz = new ForeignVocabQuiz(language);
+    private int totalQuestions; 
+    private int questionsCorrect; 
+    private int numOfGuesses; 
+    
+    // for the GUI
+    private JFrame frame; 
+    private JMenuBar menuBar;
+    private JTextField field; 
+    private JTextArea textArea; 
+    
+    public ForeignVocabQuizGUI() {
+	quiz = new ForeignVocabQuiz(this.pickLanguage()); 
+    } 
+    
+    public String pickLanguage() {
+	String[] availableLanguages = {"german", "spanish", "french", "mandarin", "russian", "japanese"};
+	String s = (String)JOptionPane.showInputDialog(frame, "Which language would you like to be quizzed on?:\n", "Pick your language!", JOptionPane.PLAIN_MESSAGE, null, availableLanguages,"german");
+	return s;  
     }
-
-    /**Creates GUI and starts quiz.
-     *Uses inner class Listener as an action listener.
-     */
-    public void go()
-    {
-	JFrame frame = new JFrame("The Foreign Language Vocabulary Quiz");
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	//JMenuBar
-	JMenuBar menuBar = new JMenuBar();
-
-	//JMenu
+    
+    public void setUpMenuBar() {
+	menuBar = new JMenuBar(); //JMenu
 	JMenu languagesMenu = new JMenu("Language");
 	JMenu helpMenu = new JMenu("Help");
 	JMenu instructionsMenu = new JMenu("How to Play");
 	JMenu settingsMenu = new JMenu("Settings");
-
+	
 	//JMenuItems
 	JMenuItem german = new JMenuItem("German");
 	JMenuItem spanish = new JMenuItem("Spanish");
@@ -62,140 +62,171 @@ public class ForeignVocabQuizGUI {
 	JMenuItem mandarin = new JMenuItem("Mandarin");
 	JMenuItem russian = new JMenuItem("Russian");
 	JMenuItem japanese = new JMenuItem("Japanese");
-
-	//JTextArea
-	JTextArea text = new JTextArea(10,35);
-
-	//Font
-	Font bigFont = new Font("serif", Font.BOLD, 14);
-
-	//JTextField
-	textField = new JTextField(20);
-
-	//JLabel
-	yourAnswer = new JLabel(); 
-	JLabel yourWord = new JLabel();
-	userResult = new JLabel();
-	JLabel yourScore = new JLabel("Your score is " + questionsCorrect + "/" + totalQuestions + "."+ newLine);
 	
-	//JButtons
-	JButton answerButton = new JButton("Answer");
-	JButton hintButton = new JButton("Hint!");
-	JButton skipButton = new JButton("Skip!");
-
-
-	//JPanels
-	JPanel centerPanel = new JPanel();
-	centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS)); 
-  	JPanel northPanel = new JPanel();
-	northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
-	JPanel southPanel = new JPanel();
-	southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS)); 
-	JPanel eastPanel = new JPanel();
-	eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-	JPanel westPanel = new JPanel();
-	westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS)); 
-
-	//JScrollPane
-	JScrollPane scroller = new JScrollPane(text);
+	frame.setJMenuBar(menuBar);
+	menuBar.add(settingsMenu);
+	menuBar.add(languagesMenu);
+	menuBar.add(instructionsMenu);	
+	menuBar.add(helpMenu);
+	languagesMenu.add(german);
+	languagesMenu.addSeparator(); 
+	languagesMenu.add(spanish);
+	languagesMenu.addSeparator();
+	languagesMenu.add(french);
+	languagesMenu.addSeparator();
+	languagesMenu.add(mandarin);
+	languagesMenu.addSeparator();
+	languagesMenu.add(russian);
+	languagesMenu.addSeparator();
+	languagesMenu.add(japanese);
+    }
+    
+    public void go(){
+	frame = new JFrame(); 
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+	setUpMenuBar(); 
+	
+	//JButton
+	JButton answerButton = new JButton("Answer"); 
+	JButton hintButton = new JButton("Hint"); 
+	JButton skipButton = new JButton("Skip"); 
+    	
+	//JTextField
+	field = new JTextField(20); 
+	textArea = new JTextArea(10,35); 
+	
+	JScrollPane scroller = new JScrollPane(textArea);
+	scroller.setPreferredSize(new Dimension(250, 80));
 	scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-	//adding and setting
-	frame.setJMenuBar(menuBar);
-	menuBar.add(languagesMenu);
-	menuBar.add(helpMenu);
-	menuBar.add(instructionsMenu);
-	menuBar.add(settingsMenu);
-	languagesMenu.add(german);
-	languagesMenu.add(spanish);
-	languagesMenu.add(french);
-	languagesMenu.add(mandarin);
-	languagesMenu.add(russian);
-	languagesMenu.add(japanese);
-
-
-	// JTextArea appends
-	text.setLineWrap(true);
-	text.setEditable(false);
-	text.append("Welcome!" + newLine);
-	text.append("This is a vocabulary quiz for a foreign language." + newLine);
-	text.append("You have three chances per word." + newLine);
-	text.append("We'll begin now." + newLine);
-
-	//Widget locations on Panels
-	northPanel.add(yourWord);
-	centerPanel.add(textField);
-	centerPanel.add(answerButton);
-	centerPanel.add(userResult);
-     	centerPanel.add(yourScore);
-	southPanel.add(scroller);
-	eastPanel.add(hintButton);
-	eastPanel.add(skipButton);
-
-	// getContentPane()
-	//frame.getContentPane().add(background);
-	//frame.getContentPane().add(BorderLayout.WEST, drawPanel);
-	frame.getContentPane().add(BorderLayout.NORTH, northPanel);
-	frame.getContentPane().add(BorderLayout.CENTER, centerPanel);
-	frame.getContentPane().add(BorderLayout.SOUTH, southPanel);
-	frame.getContentPane().add(BorderLayout.EAST, eastPanel);
-	frame.getContentPane().add(BorderLayout.WEST, westPanel);
-	frame.setSize(700,650);
-	frame.setVisible(true);
-	textField.requestFocus(); 
-	textField.addActionListener(new Listener());
+  	
+	//JLabels
+	quizWord = new JLabel(); 
+	yourGuess = new JLabel(); 
+	result = new JLabel(); 
+	yourScore = new JLabel(); 
+	
+	//JPanels
+	
+	// We want this pane to have components top to bottom
+	JPanel northPanel = new JPanel();
+	northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
+	northPanel.add(quizWord); 
+	northPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+	
+	// We want these to be left to right
+	JPanel centerPanel = new JPanel();
+	centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.LINE_AXIS));
+	centerPanel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
+	centerPanel.add(Box.createHorizontalGlue()); 
+	centerPanel.add(field); 
+	centerPanel.add(Box.createRigidArea(new Dimension(10,0))); 
+	centerPanel.add(answerButton); 
+	
+	// this one is going to contain the results of the quiz and input
+	// top to bottom
+	JPanel southPanel = new JPanel();
+	southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.PAGE_AXIS));
+	southPanel.add(yourGuess); 
+	southPanel.add(Box.createRigidArea(new Dimension(0,5)));
+	southPanel.add(result); 
+	southPanel.add(Box.createRigidArea(new Dimension(0,5)));
+	southPanel.add(yourScore); 
+	southPanel.add(Box.createRigidArea(new Dimension(0,5)));
+	southPanel.add(scroller); 
+	southPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+	
+	// this one is going to contain the other buttons that offer other functionalities apart from the answerButton
+	JPanel eastButtonPanel = new JPanel();
+	eastButtonPanel.setLayout(new BoxLayout(eastButtonPanel, BoxLayout.PAGE_AXIS));
+	eastButtonPanel.add(hintButton); 
+	eastButtonPanel.add(Box.createRigidArea(new Dimension(0,5)));
+	eastButtonPanel.add(skipButton); 
+	eastButtonPanel.add(Box.createRigidArea(new Dimension(0,5)));
+	eastButtonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5)); 
+	
+	// this one is going to be reserved for potential icons/images
+	JPanel westPanel = new JPanel();
+	westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.PAGE_AXIS));
+	westPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));  
+	
+	textArea.setLineWrap(true); 
+	textArea.setEditable(false); 
+	textArea.append("Welcome!" + newLine); 
+	textArea.append("This is a vocabulary quiz for a foreign language." + newLine); 
+	textArea.append("You will have three guesses per word." + newLine); 
+	textArea.append("We'll begin now." + newLine);
+	
+	field.requestFocus(); 
+	field.addActionListener(new Listener()); 
 	answerButton.addActionListener(new Listener()); 
-   
-	while(quiz.listNotEmpty()){
-	    
-	    totalQuestions++;
-	    yourScore.setText("Your score is " + questionsCorrect + "/" + totalQuestions + "."+ newLine);
+	
+	Container contentPane = frame.getContentPane(); 
+	contentPane.add(northPanel, BorderLayout.NORTH); 
+	contentPane.add(centerPanel, BorderLayout.CENTER); 
+	contentPane.add(southPanel, BorderLayout.SOUTH); 
+	contentPane.add(eastButtonPanel, BorderLayout.EAST); 
+	contentPane.add(westPanel, BorderLayout.WEST);
+	
+	frame.setSize(450,300);
+	frame.setVisible(true);	
+	quizGUI();
+    }
+    
+    public void quizGUI() {
+	while(quiz.listNotEmpty()) { 
+	    totalQuestions++; 
 	    numOfGuesses = 0; 
+	    
 	    word = quiz.getRandomWordFromList();
-	    counterPart = quiz.getCounterPart(); 
-	    yourWord.setText("Your word is: " + word + newLine); 
+	    counterPart = quiz.getCounterPart();
+	    
+	    quizWord.setText("Your word is: " + word + "." + newLine);
 	    
 	    while(quiz.checkUserGuess(userGuess) == false){
 		if(numOfGuesses == 3)
-		    break; 
+		    break;
 	    }
 	    if(quiz.checkUserGuess(userGuess))
-		questionsCorrect++;    
+		questionsCorrect++; 
+	    
+	    yourScore.setText("Your current score is " + questionsCorrect + "/" + totalQuestions + "!" + newLine); 
+	    
 	}
 	
-	    
 	if(!quiz.listNotEmpty()){
-	    yourScore.setText("Your score is " + questionsCorrect + "/" + totalQuestions + "."+ newLine);
-	    yourWord.setText("Finished!" + newLine);
-	    userResult.setText("There are no other words in your file!" + newLine);
-	    text.append(newLine + "Thanks for playing. =)");
+	    yourScore.setText("Your final score is " + questionsCorrect + "/" + totalQuestions + "!"+ newLine);
+	    yourGuess.setText("Finished!" + newLine);
+	    result.setText("This quiz is over!");
+	    textArea.append(newLine + "Thanks for playing. =)" + newLine + "Play Again!");
 	}
     }
     
     class Listener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
-	    userGuess = textField.getText(); 
-	    yourAnswer.setText("Your answer: " + userGuess + newLine);
-	    
-	    if(quiz.checkUserGuess(userGuess))
-		userResult.setText("Correct!" + newLine);
-	    else {
-		if (numOfGuesses == 2) 
-		    userResult.setText("The correct answer was: " + counterPart + newLine); 
-		else
-		    userResult.setText("False" + newLine); 
-		numOfGuesses++;
+	    userGuess = field.getText();
+	    yourGuess.setText(userGuess); 
+	    if(numOfGuesses < 3){
+		if(quiz.checkUserGuess(userGuess))
+		    result.setText("Your guess is correct!");
+		
+		else {
+		    if (numOfGuesses == 2)
+			result.setText("The correct answer was: " + counterPart);
+		    else
+			result.setText("Your guess was wrong! Try again!");
+		    
+		    numOfGuesses++;
+		}
 	    }
 	    
-	    textField.requestFocus();
-	    textField.selectAll();
+	    field.requestFocus();
+	    field.selectAll();
 	}
     }
-    
-    public static void main(String [] args){
-	ForeignVocabQuizGUI gui = new ForeignVocabQuizGUI();
-	gui.go();
+
+    public static void main(String[] args) {
+	ForeignVocabQuizGUI gui = new ForeignVocabQuizGUI(); 
+	gui.go(); 
     }
-    
-}//end class
+}
