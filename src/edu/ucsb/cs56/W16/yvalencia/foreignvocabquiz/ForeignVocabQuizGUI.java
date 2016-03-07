@@ -23,7 +23,7 @@ public class ForeignVocabQuizGUI {
     private JLabel yourGuess; 
     private JLabel result; 
     private JLabel quizWord; 
-    private JLabel yourScore; 
+    private JLabel yourScore;  
     private String language; 
     private String userGuess; 
     private String word; 
@@ -31,6 +31,7 @@ public class ForeignVocabQuizGUI {
     private int totalQuestions; 
     private int questionsCorrect; 
     private int numOfGuesses; 
+    private int hintLength; 
     
     // for the GUI
     private JFrame frame; 
@@ -38,17 +39,17 @@ public class ForeignVocabQuizGUI {
     private JTextField field; 
     private JTextArea textArea; 
     
-    public ForeignVocabQuizGUI() {
-	quiz = new ForeignVocabQuiz(this.pickLanguage()); 
-    } 
+    public ForeignVocabQuizGUI() { quiz = new ForeignVocabQuiz(this.pickLanguage()); } 
     
-    public String pickLanguage() {
+    public String pickLanguage()
+    {
 	String[] availableLanguages = {"german", "spanish", "french", "mandarin", "russian", "japanese"};
 	String s = (String)JOptionPane.showInputDialog(frame, "Which language would you like to be quizzed on?:\n", "Pick your language!", JOptionPane.PLAIN_MESSAGE, null, availableLanguages,"german");
 	return s;  
     }
     
-    public void setUpMenuBar() {
+    public void setUpMenuBar()
+    {
 	menuBar = new JMenuBar(); //JMenu
 	JMenu languagesMenu = new JMenu("Language");
 	JMenu helpMenu = new JMenu("Help");
@@ -81,7 +82,8 @@ public class ForeignVocabQuizGUI {
 	languagesMenu.add(japanese);
     }
     
-    public void go(){
+    public void go()
+    {
 	frame = new JFrame(); 
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	setUpMenuBar(); 
@@ -105,6 +107,7 @@ public class ForeignVocabQuizGUI {
 	yourGuess = new JLabel(); 
 	result = new JLabel(); 
 	yourScore = new JLabel(); 
+	
 	
 	//JPanels
 	
@@ -160,6 +163,8 @@ public class ForeignVocabQuizGUI {
 	field.requestFocus(); 
 	field.addActionListener(new Listener()); 
 	answerButton.addActionListener(new Listener()); 
+	hintButton.addActionListener(new hintListener()); 
+	//skipButton.addActionListener(new skipListener()); 
 	
 	Container contentPane = frame.getContentPane(); 
 	contentPane.add(northPanel, BorderLayout.NORTH); 
@@ -173,61 +178,75 @@ public class ForeignVocabQuizGUI {
 	quizGUI();
     }
     
-    public void quizGUI() {
-	while(quiz.listNotEmpty()) {
-	    yourScore.setText("Your current score is " + questionsCorrect + "/" + totalQuestions + "!" + newLine); 
-	    totalQuestions++; 
-	    numOfGuesses = 0; 
-	    
-	    word = quiz.getRandomWordFromList();
-	    counterPart = quiz.getCounterPart();
-	    
-	    quizWord.setText("Your word is: " + word + "." + newLine);
-	    
-	    while(quiz.checkUserGuess(userGuess) == false){
-		if(numOfGuesses == 3)
-		    break;
+    public void quizGUI()
+    {
+	while(quiz.listNotEmpty())
+	    {
+		totalQuestions++; 
+		numOfGuesses = 0; 
+		
+		word = quiz.getRandomWordFromList();
+		counterPart = quiz.getCounterPart();
+		
+		quizWord.setText("Your word is: " + word + "." + newLine);
+		
+		while(quiz.checkUserGuess(userGuess) == false)
+		    if(numOfGuesses == 3)
+			break;
+		
+		if(quiz.checkUserGuess(userGuess))
+		    questionsCorrect++; 
+		
+		yourScore.setText("Your current score is " + questionsCorrect + "/" + totalQuestions + "!" + newLine); 
+		
 	    }
-	    if(quiz.checkUserGuess(userGuess))
-		questionsCorrect++; 
-	    
-	    yourScore.setText("Your current score is " + questionsCorrect + "/" + totalQuestions + "!" + newLine); 
-	    
-	}
 	
-	if(!quiz.listNotEmpty()){
-	    yourScore.setText("Your final score is " + questionsCorrect + "/" + totalQuestions + "!"+ newLine);
-	    yourGuess.setText("Finished!" + newLine);
-	    result.setText("This quiz is over!");
-	    textArea.append(newLine + "Thanks for playing. =)" + newLine + "Play Again!");
-	}
+	if(!quiz.listNotEmpty())
+	    {
+		yourScore.setText("Your final score is " + questionsCorrect + "/" + totalQuestions + "!"+ newLine);
+		yourGuess.setText("Finished!" + newLine);
+		result.setText("This quiz is over!");
+		textArea.append(newLine + "Thanks for playing. =)" + newLine + "Play Again!");
+	    }
     }
     
-    class Listener implements ActionListener {
-	public void actionPerformed(ActionEvent event) {
+    class Listener implements ActionListener
+    {
+    	public void actionPerformed(ActionEvent event)
+	{
 	    userGuess = field.getText();
 	    yourGuess.setText(userGuess); 
 	    if(numOfGuesses < 3){
 		if(quiz.checkUserGuess(userGuess))
 		    result.setText("Your guess is correct!");
-		
-		else {
-		    if (numOfGuesses == 2)
-			result.setText("The correct answer was: " + counterPart);
-		    else
-			result.setText("Your guess was wrong! Try again!");
-		    
-		    numOfGuesses++;
-		}
+		else
+		    {
+			if (numOfGuesses == 2)
+			    result.setText("The correct answer was: " + counterPart);
+			else
+			    result.setText("Your guess was wrong! Try again!");
+			
+			numOfGuesses++;
+		    }
 	    }
 	    
 	    field.requestFocus();
 	    field.selectAll();
 	}
     }
-
+    
+    class hintListener implements ActionListener
+    {
+	public void actionPerformed(ActionEvent event)
+	{
+	    hintLength = counterPart.length();
+	    
+	    JOptionPane.showMessageDialog(frame,"You word has " + hintLength + " letters!","Hint!", JOptionPane.PLAIN_MESSAGE);
+	}	
+    }	
+    
     public static void main(String[] args) {
 	ForeignVocabQuizGUI gui = new ForeignVocabQuizGUI(); 
 	gui.go(); 
-    }
+    }	
 }
