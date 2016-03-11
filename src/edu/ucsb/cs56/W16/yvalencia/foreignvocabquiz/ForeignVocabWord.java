@@ -3,7 +3,9 @@ package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
 
 /**A vocabulary word that holds both the english and foreign versions of the word.
  *
- * @author Yessenia Valencia ,cs56-languages-vocab-quiz, CS56, W16, foreignlanguagesvicabquiz.
+ *@author Yessenia Valencia
+ *@version cs56-languages-vocab-quiz, CS56, W16
+ *@see ForeignVocabWordQuiz
  */
 
 public class ForeignVocabWord{

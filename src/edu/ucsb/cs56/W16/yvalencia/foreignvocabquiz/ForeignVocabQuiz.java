@@ -10,40 +10,33 @@ import java.util.*;
  *
  *@author Dane Pitkin
  *@author Yessenia Valencia
- *@version cs56-language-vocab-quiz, CS56, W16, choice points 3
+ *@version cs56-language-vocab-quiz, CS56, W16
  *@see ForeignVocabQuizGUI
  */
 
 public class ForeignVocabQuiz{
-
+    
     private ArrayList<ForeignVocabWord> vocabList;
     private FileRead file;
     private boolean displayForeignWord;
     private ForeignVocabWord testWord;
+    private String quizWord; 
     private String counterPart;
-
+    private int numOfTerms; 
 
     /**Constructor:
      *Sets up a ForeignVocabQuiz application by
      *intializing private data members.
      *Also reads file that was given by user.
      */
-
-    //    public ForeignVocabQuiz(){//sets up application
-    //vocabList = new ArrayList<ForeignVocabWord>();
-    //file = new FileRead();
-    //file.getFileName();
-    // file.readFromFile();
-    // setUpVocabList();
-    // }
-
+    
     public ForeignVocabQuiz(String language) {
 	vocabList = new ArrayList<ForeignVocabWord>();
 	file = new FileRead(language);
 	file.readFromFile();
 	setUpVocabList();
     }
-
+    
     /** Sort the list of words from file from
      *<code>ArrayList<String></code> into a list of
      *Foreign Vocab Words of type <code>ArrayList<ForeignVocabWord></code>.
@@ -55,7 +48,8 @@ public class ForeignVocabQuiz{
 	ForeignVocabWord word;
 	ArrayList<String> list = file.getList();
 	int size = file.getSizeOfArray();
-
+	numOfTerms = 0;
+	
 	for(int i = 0; i<size; i++){
 	    if(i%2 == 0)//We assume the foreign word comes first
 		foreignWord = list.get(i);
@@ -63,35 +57,45 @@ public class ForeignVocabQuiz{
 		englishWord = list.get(i);
 		word = new ForeignVocabWord(englishWord, foreignWord);
 		vocabList.add(word);
+		numOfTerms++; 
 	    }
 	    
 	}
     }
 
+ 
     public boolean listNotEmpty(){
-	return (vocabList.size() != 0); 
+	return !vocabList.isEmpty(); 
     }
-
+    
+    public int getSize() {
+	return vocabList.size();  
+    }
+    
     public String getCounterPart(){
 	return counterPart;
     }
-
+    
+    public String getQuizWord() {
+	return quizWord;
+    }
+    
     /**Get a random index from <code>vocabList</code>.
      *@param aList the list of ForeignVocabWords.
      *@return randNum a random number within the
      *boundaries of the array indices.
      */
-
-    public int randomIndex(ArrayList<ForeignVocabWord> aList){
-	int size = aList.size();
-	int randNum = (int)(Math.random()*size);
+    
+    public int randomIndex(ArrayList<ForeignVocabWord> aList) {
+	int sizeOfCurrentList = aList.size();
+	int randNum = (int)(Math.random() * sizeOfCurrentList);
 	return randNum;
     }
-
-    /**Finds and gets a random word from the vocab list.
-       @return String - the word to be tested on
-    */
-
+    
+    /**Finds and sets a random word from the vocabList.
+     *@return String - the word to be tested on
+     */
+    
     public String getRandomWordFromList() {
 	displayForeignWord = false;
 	
@@ -106,21 +110,26 @@ public class ForeignVocabQuiz{
 	    displayForeignWord = true;//just to make code understandable
 	
 	
-	if(displayForeignWord) { // equals true
+	if(displayForeignWord){// equals true
+	    quizWord = testWord.getForeignWord();
 	    counterPart = testWord.getEnglishWord();
 	    return testWord.getForeignWord();//Display foreign word
 	}
-	else { //if displayForeignWord is false, display english word
+	
+	else {
+	    //if displayForeignWord is false, display english word
+	    quizWord = testWord.getEnglishWord(); 
 	    counterPart = testWord.getForeignWord();
 	    return testWord.getEnglishWord();
 	}
+	
     }
-
+    
     
     /** Checks users guess with the correct vocab word.
-     *@return boolean - speficies if answer was correct or not
+     *@return boolean - specifies if answer was correct or not
      */
-
+    
     public boolean checkUserGuess(String guess){
 	if (displayForeignWord){
 	    if (testWord.equalsEnglishWord(guess))
@@ -132,5 +141,5 @@ public class ForeignVocabQuiz{
 	}
 	return false;
     }
-
+    
 }//end class
