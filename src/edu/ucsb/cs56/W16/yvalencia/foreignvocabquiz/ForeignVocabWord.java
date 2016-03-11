@@ -2,7 +2,7 @@ package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
 
 
 /**A vocabulary word that holds both the english and foreign versions of the word.
- *
+ *@author Dane Pitkin
  *@author Yessenia Valencia
  *@version cs56-languages-vocab-quiz, CS56, W16
  *@see ForeignVocabWordQuiz

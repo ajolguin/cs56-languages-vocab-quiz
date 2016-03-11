@@ -28,6 +28,7 @@ public class ForeignVocabQuiz{
      *Sets up a ForeignVocabQuiz application by
      *intializing private data members.
      *Also reads file that was given by user.
+     *parameter chooses the filename of the given language
      */
     
     public ForeignVocabQuiz(String language) {
@@ -62,8 +63,8 @@ public class ForeignVocabQuiz{
 	    
 	}
     }
-
- 
+    
+    
     public boolean listNotEmpty(){
 	return !vocabList.isEmpty(); 
     }
@@ -101,7 +102,7 @@ public class ForeignVocabQuiz{
 	
 	int index = randomIndex(vocabList);
 	testWord = vocabList.get(index);
-	vocabList.remove(index);
+	
 	
 	//randomize displaying english/foreign word
 	int randomNum = (int)(Math.random()*2);
@@ -113,14 +114,18 @@ public class ForeignVocabQuiz{
 	if(displayForeignWord){// equals true
 	    quizWord = testWord.getForeignWord();
 	    counterPart = testWord.getEnglishWord();
-	    return testWord.getForeignWord();//Display foreign word
+	    vocabList.remove(quizWord);
+	    vocabList.remove(counterPart); 
+	    return quizWord; 
 	}
 	
 	else {
 	    //if displayForeignWord is false, display english word
 	    quizWord = testWord.getEnglishWord(); 
 	    counterPart = testWord.getForeignWord();
-	    return testWord.getEnglishWord();
+	    vocabList.remove(quizWord);
+	    vocabList.remove(counterPart);
+	    return quizWord;
 	}
 	
     }

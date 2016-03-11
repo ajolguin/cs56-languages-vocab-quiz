@@ -7,7 +7,7 @@ import javax.swing.*;
 
 /**
    A GUI for ForeignVocabQuiz.
-
+   
    @author Dane Pitkin
    @author Yessenia Valencia
    @version cs56-languages-vocab-quiz, CS56, W16
@@ -22,7 +22,7 @@ public class ForeignVocabQuizGUI {
     // for quizGUI and from ForeignVocabQuiz
     private String languageChoice; 
     private ForeignVocabQuiz quiz;
-
+    
     private JLabel yourGuess;
     private JLabel numGuesses; 
     private JLabel yourResult; 
@@ -30,7 +30,7 @@ public class ForeignVocabQuizGUI {
     private JLabel yourScore;
     private JLabel yourCorrectScore;
     private JLabel yourIncorrectScore;
-
+    
     private String userGuess;
     private String randomWord; 
     private String counterPart;
@@ -56,11 +56,6 @@ public class ForeignVocabQuizGUI {
     public ForeignVocabQuizGUI() {
 	languageChoice = this.pickLanguage(); 
 	quiz = new ForeignVocabQuiz(languageChoice);
-	numOfGuesses = 0;
-	questionsCorrect = 0;
-	totalQuestions = 1;
-	correct = false;
-	
     }
     
     
@@ -105,7 +100,7 @@ public class ForeignVocabQuizGUI {
 	frame = new JFrame();
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setUpMenuBar(); 
-
+	
 	textField = new JTextField(20); 
 	
 	JPanel northPanel = new JPanel();
@@ -137,9 +132,9 @@ public class ForeignVocabQuizGUI {
 	numGuesses = new JLabel(); 
 	yourResult = new JLabel(); 
 	quizWord = new JLabel();
-	yourScore = new JLabel("Your current score is: "); 
-	yourCorrectScore = new JLabel("Correct: " + questionsCorrect + "/" + totalQuestions); 
-	yourIncorrectScore = new JLabel("Incorrect: " + questionsIncorrect + "/" + totalQuestions);
+	yourScore = new JLabel(); 
+	yourCorrectScore = new JLabel();
+	yourIncorrectScore = new JLabel(); 
 	
 	northPanel.add(quizWord);
 	northPanel.add(textField);
@@ -160,24 +155,29 @@ public class ForeignVocabQuizGUI {
 	yourScore.setText("Your current score is: "); 
 	yourCorrectScore.setText("Correct: " + questionsCorrect + "/" + totalQuestions); 
 	yourIncorrectScore.setText("Incorrect: " + questionsIncorrect + "/" + totalQuestions);
-	
+        
 	while(quiz.listNotEmpty()) {
-	    getWord(); 
-	    while(!correct) {
+	    getWord();
+	    
+	    while(correct == false) {
 		if(numOfGuesses == 3) {
-		    questionsIncorrect++; 
-		    yourResult.setText("Right answer is: " + counterPart);
+		    questionsIncorrect++;
+		    yourResult.setText("Incorrect! The correct answer is: " + counterPart);
 		    break;
 		}
+		else {
+		    yourResult.setText("Incorrect! Try Again!");
+		    numOfGuesses++;
+		}
+		
 	    }
 	    
-	    if(correct) 
+	    if(correct == true) {
+		yourResult.setText("You are correct!");
 		questionsCorrect++;
+	    }
 	    
-	    
-	    yourScore.setText("Your current score is: ");
-	    yourCorrectScore.setText("Correct: " + questionsCorrect + "/" + totalQuestions);
-	    yourIncorrectScore.setText("Incorrect: " + questionsIncorrect + "/" + totalQuestions);
+	    update();
 	}
 	
 	
@@ -192,24 +192,23 @@ public class ForeignVocabQuizGUI {
     
     class checkGuessListener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
-	    userGuess = textField.getText();
-	    yourGuess.setText("You guessed: " + userGuess);
-	    
-	    if(quiz.checkUserGuess(userGuess)) {
-		yourResult.setText("You are correct!");
-		correct = true; 
-	    }
-	    
-	    else {
-		yourResult.setText("Incorrect! Try again!"); 
-		numOfGuesses++;
-		correct = false; 
-	    }
-	    
-	    
-	    textField.requestFocus();
-	    textField.selectAll(); 
+	    correct = check();
 	}
+    }
+    
+    public boolean check() {
+	userGuess = textField.getText();
+	yourGuess.setText("You guessed: " + userGuess);
+	
+	if(quiz.checkUserGuess(userGuess)) 
+	    correct = true; 
+	
+	else
+	    correct = false; 
+	
+	textField.requestFocus();
+	textField.selectAll(); 
+	return correct; 
     }
     
     public void getWord() {
@@ -219,6 +218,16 @@ public class ForeignVocabQuizGUI {
 	totalQuestions++; 
 	numOfGuesses = 0;
 	correct = false; 
+    }
+    
+    public void update() {
+	quizWord.setText("Your word is: " + randomWord);
+	yourGuess.setText("You guessed: " + userGuess);
+        yourScore.setText("Your current score is :");
+	yourCorrectScore.setText("Correct: " + questionsCorrect + "/" + totalQuestions);
+	yourIncorrectScore.setText("Incorrect: " + questionsIncorrect + "/" + totalQuestions);
+	numGuesses.setText("Your number of guesses so far is: " + numOfGuesses);
+	
     }
     
     class skipButtonListener implements ActionListener {
