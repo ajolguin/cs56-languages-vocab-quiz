@@ -19,33 +19,32 @@ public class ForeignVocabQuizGUI {
     
     private final static String newLine = "\n";
     
-    // for quizGUI and from ForeignVocabQuiz
-    private String languageChoice; 
+    //private String languageChoice; 
     private ForeignVocabQuiz quiz;
     
     private JLabel yourGuess;
-    private JLabel numGuesses; 
+    // private JLabel numGuesses; 
     private JLabel yourResult; 
-    private JLabel quizWord; 
-    private JLabel yourScore;
-    private JLabel yourCorrectScore;
-    private JLabel yourIncorrectScore;
+    // private JLabel quizWord; 
+    // private JLabel yourCorrectScore;
+    // private JLabel yourIncorrectScore;
     
     private String userGuess;
     private String randomWord; 
     private String counterPart;
-    private int numOfGuesses; 
-    private int questionsCorrect;
-    private int questionsIncorrect; 
-    private int totalQuestions; 
-    private boolean correct; 
+    
+    private int numOfGuesses = 0 ;
+    private int totalQuestions = 1; 
+    private int questionsCorrect = 0;
+    private int questionsIncorrect = 0; 
     
     
     // for the GUI
     
     private JFrame frame; 
     private JMenuBar menuBar;
-    private JTextField textField; 
+    private JTextField textField;
+    
     
     /**Constructor:
      * Creates an ForeignVocabQuiz object by
@@ -54,8 +53,7 @@ public class ForeignVocabQuizGUI {
      */
     
     public ForeignVocabQuizGUI() {
-	languageChoice = this.pickLanguage(); 
-	quiz = new ForeignVocabQuiz(languageChoice);
+	quiz = new ForeignVocabQuiz(this.pickLanguage());
     }
     
     
@@ -98,141 +96,146 @@ public class ForeignVocabQuizGUI {
     public void go(){
 	
 	frame = new JFrame();
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setUpMenuBar(); 
 	
-	textField = new JTextField(20); 
+	textField = new JTextField(20);
 	
-	JPanel northPanel = new JPanel();
-	JPanel centerPanel = new JPanel();
-	JPanel southPanel = new JPanel();
+	JTextArea textArea = new JTextArea(10,35);
 	
-	northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
-	centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-	southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.X_AXIS));
-	
-	Container contentPane = frame.getContentPane();
-	contentPane.add(northPanel, BorderLayout.NORTH);
-	contentPane.add(centerPanel, BorderLayout.CENTER);
-	contentPane.add(southPanel, BorderLayout.SOUTH);
+	JScrollPane scroller = new JScrollPane(textArea);
+	scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	
 	
 	JButton answerButton = new JButton("Answer!");
 	JButton hintButton = new JButton("Hint!");
-	JButton skipButton = new JButton("Skip!"); 
+	JButton skipButton = new JButton("Skip!");
 	
-	textField.requestFocus();
-	textField.addActionListener(new checkGuessListener()); 
-	answerButton.addActionListener(new checkGuessListener());
-	hintButton.addActionListener(new hintListener());
-	skipButton.addActionListener(new skipButtonListener());
+	yourGuess = new JLabel();
+	yourResult = new JLabel();
+	JLabel quizWord = new JLabel("The word is: ");
+	JLabel yourCorrectScore = new JLabel("Questions correct: " + questionsCorrect);
+	JLabel yourIncorrectScore = new JLabel("Questions incorrect: " + questionsIncorrect);
 	
+	JPanel northPanel = new JPanel();
+	JPanel centerPanel = new JPanel();
+	JPanel southPanel = new JPanel();
+	JPanel eastPanel = new JPanel(); 
 	
-	yourGuess = new JLabel(); 
-	numGuesses = new JLabel(); 
-	yourResult = new JLabel(); 
-	quizWord = new JLabel();
-	yourScore = new JLabel(); 
-	yourCorrectScore = new JLabel();
-	yourIncorrectScore = new JLabel(); 
+	northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+	centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+	southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
+	eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS)); 
 	
 	northPanel.add(quizWord);
 	northPanel.add(textField);
 	northPanel.add(answerButton);
 	
 	centerPanel.add(yourGuess);
+	//	centerPanel.add(numGuesses); 
 	centerPanel.add(yourResult);
-	centerPanel.add(yourScore);
 	centerPanel.add(yourCorrectScore);
 	centerPanel.add(yourIncorrectScore); 
 	
-	southPanel.add(hintButton);
-	southPanel.add(skipButton);
+	eastPanel.add(hintButton);
+	eastPanel.add(skipButton);
+	
+	southPanel.add(scroller);
+	
+	
+        textField.requestFocus();
+	
+	textField.addActionListener(new Listener());
+	answerButton.addActionListener(new Listener());
+	hintButton.addActionListener(new hintListener());
+	skipButton.addActionListener(new skipListener());
+	
+        Container contentPane = frame.getContentPane();
+	contentPane.add(northPanel, BorderLayout.NORTH);
+	contentPane.add(centerPanel, BorderLayout.CENTER);
+	contentPane.add(southPanel, BorderLayout.SOUTH);
+	contentPane.add(eastPanel, BorderLayout.EAST); 
 	
 	frame.setSize(600,550);
 	frame.setVisible(true);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-	yourScore.setText("Your current score is: "); 
-	yourCorrectScore.setText("Correct: " + questionsCorrect + "/" + totalQuestions); 
-	yourIncorrectScore.setText("Incorrect: " + questionsIncorrect + "/" + totalQuestions);
-        
-	while(quiz.listNotEmpty()) {
-	    getWord();
+	
+	while(quiz.listNotEmpty()) {    
 	    
-	    while(correct == false) {
+	    numOfGuesses = 0;
+	    
+	    randomWord = quiz.getRandomWordFromList();
+	    counterPart = quiz.getCounterPart();
+	    
+	    quizWord.setText("Your word is: " + randomWord);
+	    
+	    
+	    yourCorrectScore.setText("Your correct score is " + questionsCorrect + "/" + totalQuestions + ".");
+	    yourIncorrectScore.setText("Your incorrect score is " +  questionsIncorrect + "/" + totalQuestions + ".");
+	    
+	    while(quiz.checkUserGuess(userGuess) == false){
 		if(numOfGuesses == 3) {
 		    questionsIncorrect++;
-		    yourResult.setText("Incorrect! The correct answer is: " + counterPart);
 		    break;
 		}
-		else {
-		    yourResult.setText("Incorrect! Try Again!");
-		    numOfGuesses++;
-		}
-		
 	    }
 	    
-	    if(correct == true) {
-		yourResult.setText("You are correct!");
+	    if(quiz.checkUserGuess(userGuess) == true) 
 		questionsCorrect++;
+	    
+	    numOfGuesses = 0;
+	    //randomWord = quiz.getRandomWordFromList();
+	    //counterPart = quiz.getCounterPart(); 
+	    totalQuestions++;
+	}
+	
+	if(!quiz.listNotEmpty()){
+	    yourCorrectScore.setText(" ");
+	    yourIncorrectScore.setText(" "); 
+	    yourGuess.setText(" ");
+	    yourResult.setText(" ");
+	    
+	    textArea.append("You are finished!" + newLine);
+	    textArea.append("Your final score: " + newLine);
+	    textArea.append("Correct: " + questionsCorrect + "/" + totalQuestions + newLine);
+	    textArea.append("Incorrect: " + questionsIncorrect + "/" + totalQuestions + newLine);
+	    textArea.append("Thank you for playing!");
+	}
+    }
+    
+    class Listener implements ActionListener {
+	public void actionPerformed(ActionEvent event) {
+	    userGuess = textField.getText(); 
+	    yourGuess.setText("You guessed: " + userGuess + ".");
+	    // numGuesses.setText("Number of guesses: " + numOfGuesses + "."); 
+	    
+	    //if(numOfGuesses < 3){
+	    if(quiz.checkUserGuess(userGuess))
+		yourResult.setText("Correct!");
+	    else {
+		if(numOfGuesses == 2)
+		    yourResult.setText("The correct answer was: " + counterPart);
+		else
+		    yourResult.setText("Incorrect! Try again");
+		numOfGuesses++;
 	    }
 	    
-	    update();
+	    textField.requestFocus();
+	    textField.selectAll();
 	}
-	
-	
-	if(!quiz.listNotEmpty()) {
-	    yourScore.setText("Your final score is: "); 
-	    yourCorrectScore.setText("Correct: " + questionsCorrect + "/" + totalQuestions);
-	    yourIncorrectScore.setText("Incorrect: " + questionsIncorrect + "/" + totalQuestions);
-	    yourGuess.setText("Finished!");
-	    yourResult.setText("This quiz is over! Thanks for playing");
-	}
-    }
-    
-    class checkGuessListener implements ActionListener {
-	public void actionPerformed(ActionEvent event) {
-	    correct = check();
-	}
-    }
-    
-    public boolean check() {
-	userGuess = textField.getText();
-	yourGuess.setText("You guessed: " + userGuess);
-	
-	if(quiz.checkUserGuess(userGuess)) 
-	    correct = true; 
-	
-	else
-	    correct = false; 
-	
-	textField.requestFocus();
-	textField.selectAll(); 
-	return correct; 
     }
     
     public void getWord() {
 	randomWord = quiz.getRandomWordFromList();
 	counterPart = quiz.getCounterPart();
-	quizWord.setText("The word is: " + randomWord); 
 	totalQuestions++; 
 	numOfGuesses = 0;
-	correct = false; 
     }
     
-    public void update() {
-	quizWord.setText("Your word is: " + randomWord);
-	yourGuess.setText("You guessed: " + userGuess);
-        yourScore.setText("Your current score is :");
-	yourCorrectScore.setText("Correct: " + questionsCorrect + "/" + totalQuestions);
-	yourIncorrectScore.setText("Incorrect: " + questionsIncorrect + "/" + totalQuestions);
-	numGuesses.setText("Your number of guesses so far is: " + numOfGuesses);
-	
-    }
-    
-    class skipButtonListener implements ActionListener {
+    class skipListener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
-	    getWord();
+	    getWord(); 
 	}
     }
     

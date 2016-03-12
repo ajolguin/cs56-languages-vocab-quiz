@@ -20,26 +20,24 @@ public class ForeignVocabQuiz{
     private FileRead file;
     private boolean displayForeignWord;
     private ForeignVocabWord testWord;
-    private String quizWord; 
     private String counterPart;
-    private int numOfTerms; 
 
+    
     /**Constructor:
-     *Sets up a ForeignVocabQuiz application by
+     *Sets up a ForeignVocabQuiz application by 
      *intializing private data members.
      *Also reads file that was given by user.
-     *parameter chooses the filename of the given language
      */
     
-    public ForeignVocabQuiz(String language) {
+    public ForeignVocabQuiz(String language){//sets up application
 	vocabList = new ArrayList<ForeignVocabWord>();
 	file = new FileRead(language);
 	file.readFromFile();
 	setUpVocabList();
     }
     
-    /** Sort the list of words from file from
-     *<code>ArrayList<String></code> into a list of
+    /** Sort the list of words from file from 
+     *<code>ArrayList<String></code> into a list of 
      *Foreign Vocab Words of type <code>ArrayList<ForeignVocabWord></code>.
      * Assumes foreign word comes before english word.
      */
@@ -49,7 +47,6 @@ public class ForeignVocabQuiz{
 	ForeignVocabWord word;
 	ArrayList<String> list = file.getList();
 	int size = file.getSizeOfArray();
-	numOfTerms = 0;
 	
 	for(int i = 0; i<size; i++){
 	    if(i%2 == 0)//We assume the foreign word comes first
@@ -58,81 +55,62 @@ public class ForeignVocabQuiz{
 		englishWord = list.get(i);
 		word = new ForeignVocabWord(englishWord, foreignWord);
 		vocabList.add(word);
-		numOfTerms++; 
 	    }
-	    
 	}
     }
-    
-    
+
     public boolean listNotEmpty(){
-	return !vocabList.isEmpty(); 
+	return !vocabList.isEmpty();
     }
-    
-    public int getSize() {
-	return vocabList.size();  
-    }
-    
+
     public String getCounterPart(){
 	return counterPart;
     }
-    
-    public String getQuizWord() {
-	return quizWord;
-    }
-    
+
     /**Get a random index from <code>vocabList</code>.
-     *@param aList the list of ForeignVocabWords.
-     *@return randNum a random number within the
+     *@param list the list of ForeignVocabWords.
+     *@return randNum a random number within the 
      *boundaries of the array indices.
      */
     
-    public int randomIndex(ArrayList<ForeignVocabWord> aList) {
-	int sizeOfCurrentList = aList.size();
-	int randNum = (int)(Math.random() * sizeOfCurrentList);
+    public int randomIndex(ArrayList<ForeignVocabWord> aList){
+	int size = aList.size();
+	int randNum = (int)(Math.random()*size);
 	return randNum;
     }
     
-    /**Finds and sets a random word from the vocabList.
-     *@return String - the word to be tested on
-     */
+    /**Finds and gets a random word from the vocab list.
+       @return String - the word to be tested on
+    */
     
-    public String getRandomWordFromList() {
+    public String getRandomWordFromList(){
+	int randomNum = 0;
+	int index = 0;
+	testWord = null;
 	displayForeignWord = false;
 	
-	int index = randomIndex(vocabList);
+	index = randomIndex(vocabList);
 	testWord = vocabList.get(index);
 	
-	
 	//randomize displaying english/foreign word
-	int randomNum = (int)(Math.random()*2);
-	
+	randomNum = (int)(Math.random()*2);	    
 	if (randomNum == 0)//randomNum is either 0 or 1
 	    displayForeignWord = true;//just to make code understandable
 	
+	vocabList.remove(index);//remove word from vocabList
 	
-	if(displayForeignWord){// equals true
-	    quizWord = testWord.getForeignWord();
+	if (displayForeignWord){ // equals true
 	    counterPart = testWord.getEnglishWord();
-	    vocabList.remove(quizWord);
-	    vocabList.remove(counterPart); 
-	    return quizWord; 
+	    return testWord.getForeignWord();//Display foreign word
 	}
-	
-	else {
-	    //if displayForeignWord is false, display english word
-	    quizWord = testWord.getEnglishWord(); 
+	else{ //if displayForeignWord is false, display english word
 	    counterPart = testWord.getForeignWord();
-	    vocabList.remove(quizWord);
-	    vocabList.remove(counterPart);
-	    return quizWord;
+	    return testWord.getEnglishWord();
 	}
-	
     }
     
-    
     /** Checks users guess with the correct vocab word.
-     *@return boolean - specifies if answer was correct or not
+     *@return boolean - speficies if answer was correct or not
      */
     
     public boolean checkUserGuess(String guess){
@@ -148,3 +126,6 @@ public class ForeignVocabQuiz{
     }
     
 }//end class
+
+	
+		    
