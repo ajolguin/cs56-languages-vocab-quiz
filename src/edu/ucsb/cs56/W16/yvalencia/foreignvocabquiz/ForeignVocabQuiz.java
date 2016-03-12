@@ -11,7 +11,6 @@ import java.util.*;
  *@author Dane Pitkin
  *@author Yessenia Valencia
  *@version cs56-language-vocab-quiz, CS56, W16
- *@see ForeignVocabQuizGUI
  */
 
 public class ForeignVocabQuiz{
@@ -27,6 +26,7 @@ public class ForeignVocabQuiz{
      *Sets up a ForeignVocabQuiz application by 
      *intializing private data members.
      *Also reads file that was given by user.
+     *@param language chosen language in GUI
      */
     
     public ForeignVocabQuiz(String language){//sets up application
@@ -68,7 +68,7 @@ public class ForeignVocabQuiz{
     }
 
     /**Get a random index from <code>vocabList</code>.
-     *@param list the list of ForeignVocabWords.
+     *@param aList the list of ForeignVocabWords.
      *@return randNum a random number within the 
      *boundaries of the array indices.
      */
@@ -110,7 +110,8 @@ public class ForeignVocabQuiz{
     }
     
     /** Checks users guess with the correct vocab word.
-     *@return boolean - speficies if answer was correct or not
+     *@param guess - the string that is meant to be checked
+     *@return boolean - specifies if answer was correct or not
      */
     
     public boolean checkUserGuess(String guess){

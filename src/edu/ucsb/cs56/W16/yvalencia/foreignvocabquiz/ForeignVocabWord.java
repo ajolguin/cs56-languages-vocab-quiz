@@ -5,7 +5,6 @@ package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
  *@author Dane Pitkin
  *@author Yessenia Valencia
  *@version cs56-languages-vocab-quiz, CS56, W16
- *@see ForeignVocabWordQuiz
  */
 
 public class ForeignVocabWord{
