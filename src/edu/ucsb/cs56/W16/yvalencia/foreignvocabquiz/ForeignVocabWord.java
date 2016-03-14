@@ -1,9 +1,10 @@
-package edu.ucsb.cs56.S11.dpitkin.choice3;
+package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
+
 
 /**A vocabulary word that holds both the english and foreign versions of the word.
- *
- * @author Dane Pitkin
- * @version Mantis Ticket 0000273, CS56, S11, choice points 3.
+ *@author Dane Pitkin
+ *@author Yessenia Valencia
+ *@version cs56-languages-vocab-quiz, CS56, W16
  */
 
 public class ForeignVocabWord{
@@ -37,7 +38,7 @@ public class ForeignVocabWord{
     public String getEnglishWord(){
 	return this.englishWord;
     }
-    
+
 
     /** Get foreign word.
      *@return <code>foreignWord</code> of type String.
@@ -46,7 +47,7 @@ public class ForeignVocabWord{
     public String getForeignWord(){
 	return this.foreignWord;
     }
-    
+
     /**Set English word.
      *@param word of type String.
      */
@@ -58,7 +59,7 @@ public class ForeignVocabWord{
     /** Set foreign word.
      *@param word of type String.
      */
-    
+
     public void setForeignWord(String word){
 	foreignWord = word;
     }

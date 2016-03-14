@@ -1,28 +1,29 @@
-//package edu.ucsb.cs56.S11.dpitkin.choice3.test;
+package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- *The test class ForeignVocabWordTest, to test theForeign VocabWord class
+ *The test class ForeignVocabWordTest, to test the ForeignVocabWord class
  *
  *
  *@author Dane Pitkin
- *@version Choice Points 2 for CS56, S11
+ *@author Yessenia Valencia
+ *@version Choice Points 2 for CS56, W16
  *@see ForeignVocabWord
  */
 
 public class ForeignVocabWordTest{
-    
+
     /**Test the constructor
      */
-  
+
     @Test public void testConstructor(){
 	ForeignVocabWord word = new ForeignVocabWord("Hello", "Hallo");
 	assertEquals("Hallo", word.getForeignWord());
 	assertEquals("Hello", word.getEnglishWord());
     }
-    
+
     /**Test the .equals() methods
      */
 
