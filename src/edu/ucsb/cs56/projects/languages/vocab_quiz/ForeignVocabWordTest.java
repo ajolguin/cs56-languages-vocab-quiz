@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
+package edu.ucsb.cs56.projects.languages.vocab_quiz;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;

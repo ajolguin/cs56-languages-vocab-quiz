@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz;
+package edu.ucsb.cs56.projects.languages.vocab_quiz;
 
 
 /**A vocabulary word that holds both the english and foreign versions of the word.

@@ -11,11 +11,10 @@
 
 
   <property name="course" value="cs56" />
-  <property name="quarter" value="W16" />
   <property name="mainClass" value="ForeignVocabQuizGUI" />
   <property name="projectName" value="cs56-languages-vocab-quiz" />
-  <property name="fullPkg" value="edu.ucsb.cs56.W16.yvalencia.foreignvocabquiz" />
-  <property name="projectPath" value="${course}/${quarter}/${projectName}" />
+  <property name="fullPkg" value="edu.ucsb.cs56.projects.languages.vocab_quiz" />
+  <property name="projectPath" value="${course}/${projectName}" />
   <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" />
   <property name="javadocURL" value="${webBaseUrl}/${projectPath}/javadoc" />
   <property name="jwsDest" value="${webRoot}/${projectPath}/jws"/>
@@ -29,7 +28,7 @@
 
   <target name="compile" description="compile my code">
     <mkdir dir="build" />
-    <copy todir="build/edu/ucsb/cs56/W16/yvalencia/foreignvocabquiz/" >
+    <copy todir="build/edu/ucsb/cs56/projects/languages/vocab_quiz/" >
       <fileset dir="text"/>
     </copy>
     <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime="false">
@@ -119,8 +118,7 @@
     </delete>
 
   </target>
-
-
+  
 
   <target name="javadoc" depends="compile" description="create javadoc">
 
