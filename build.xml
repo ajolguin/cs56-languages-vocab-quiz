@@ -83,41 +83,6 @@
       </manifest>
     </jar>
   </target>
-
-  <target name="download" depends="" description="make my code downloadable">
-
-    <delete quiet="true">
-      <fileset dir="temp" includes="**/*" />
-      <fileset dir="download" includes="**/*" />
-    </delete>
-
-    <mkdir dir="download" />
-    <mkdir dir="temp" />
-    <mkdir dir="temp/${projectName}" />
-
-    <copy todir="temp/${projectName}">
-      <fileset dir="."
-	       excludes="build/**, javadoc/**, **/*~, temp/**, dist/**, download/**"/>
-    </copy>
-
-    <tar destfile="temp/${projectName}.tar"
-	 basedir="temp"
-	 includes="${projectName}/**"
-	 />
-
-    <gzip zipfile="download/${projectName}.tgz"
-	  src="temp/${projectName}.tar" />
-
-    <zip destfile="download/${projectName}.zip"
-	 basedir="temp"
-	 includes="${projectName}/**"
-	 />
-
-    <delete quiet="true">
-      <fileset dir="temp" includes="**/*"/>
-    </delete>
-
-  </target>
   
 
   <target name="javadoc" depends="compile" description="create javadoc">
@@ -149,36 +114,8 @@
     <echo>Javadoc deployed to ${javadocURL}</echo>
 
   </target>
-
-
- <target name="publish" depends="jar,javadoc,download,jws" description="publish javadoc, jar, and download" >
-    <mkdir dir="${webRoot}/${projectPath}" />
-
-    <delete dir="${webRoot}/${projectPath}/browse" />
-    <mkdir dir="${webRoot}/${projectPath}/browse" />
-
-    <delete dir="${webRoot}/${projectPath}/download" />
-    <mkdir dir="${webRoot}/${projectPath}/download" />
-
-    <copy file="html/index.html" todir="${webRoot}/${projectPath}"/>
-
-    <copy todir="${webRoot}/${projectPath}/download" >
-      <fileset dir="download"/>
-      <fileset dir="dist" />
-    </copy>
-
-    <copy file="build.xml" todir="${webRoot}/${projectPath}/browse"/>
-
-    <copy todir="${webRoot}/${projectPath}/browse/src" >
-      <fileset dir="src"/>
-    </copy>
-
-    <chmod dir="${webRoot}/${projectPath}"
-	   perm="755" type="both" includes="**/*"/>
-
-    <echo>Project published to ${webBaseUrl}/${projectPath}</echo>
-  </target>
-
+ 
+  
   <target name="jws" depends="compile,jar" description="publish java web start">
     <delete dir="${webRoot}/${projectPath}/jws"/>
     <mkdir dir="${webRoot}/${projectPath}/jws"/>
