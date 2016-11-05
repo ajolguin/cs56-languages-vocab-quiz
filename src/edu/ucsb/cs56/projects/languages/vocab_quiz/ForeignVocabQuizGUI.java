@@ -177,12 +177,15 @@ public class ForeignVocabQuizGUI {
 	    while(quiz.checkUserGuess(userGuess) == false){
 		if(numOfGuesses == 3) {
 		    questionsIncorrect++;
+		    /* mine */   //yourIncorrectScore.setText("Your incorrect score is " +  questionsIncorrect + "/" + totalQuestions + ".");	    
 		    break;
 		}
 	    }
 	    
-	    if(quiz.checkUserGuess(userGuess) == true) 
+	    if(quiz.checkUserGuess(userGuess) == true){ 
 		questionsCorrect++;
+		/* my */	//yourCorrectScore.setText("Your correct score is " + questionsCorrect + "/" + totalQuestions + ".");
+	    }
 	    
 	    numOfGuesses = 0;
 	    //randomWord = quiz.getRandomWordFromList();
@@ -213,6 +216,7 @@ public class ForeignVocabQuizGUI {
 	    //if(numOfGuesses < 3){
 	    if(quiz.checkUserGuess(userGuess))
 		yourResult.setText("Correct!");
+
 	    else {
 		if(numOfGuesses == 2)
 		    yourResult.setText("The correct answer was: " + counterPart);
