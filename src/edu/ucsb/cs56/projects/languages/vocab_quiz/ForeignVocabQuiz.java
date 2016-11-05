@@ -20,6 +20,7 @@ public class ForeignVocabQuiz{
     private boolean displayForeignWord;
     private ForeignVocabWord testWord;
     private String counterPart;
+    private String testLanguage;
 
     
     /**Constructor:
@@ -34,6 +35,7 @@ public class ForeignVocabQuiz{
 	file = new FileRead(language);
 	file.readFromFile();
 	setUpVocabList();
+	testLanguage = language;
     }
     
     /** Sort the list of words from file from 
@@ -124,6 +126,10 @@ public class ForeignVocabQuiz{
 		return true;
 	}
 	return false;
+    }
+
+    public String getLanguage(){
+	return testLanguage;
     }
     
 }//end class
