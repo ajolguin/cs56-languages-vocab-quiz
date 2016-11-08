@@ -33,4 +33,8 @@ public class ForeignVocabWordTest{
 	assertEquals(true, word.equalsEnglishWord(word.getEnglishWord()));
     }
 
+    //@Test public void testHintButton(){
+	//ForeignVocabQuizGUI test = new ForeignVocabQuizGUI();
+	//test.skipButton.isSelected(true);
+	
 }//end test
