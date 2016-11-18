@@ -61,13 +61,17 @@ public class ForeignVocabQuizGUI {
 	quiz = new ForeignVocabQuiz(this.pickLanguage());
     }
     
-    
+    /** Sets up a string with instructions on how to play the quiz
+     *@return <code>s<String></code> where s contains lines of instruction
+     */
     public String pickLanguage() {
 	String[] availableLanguages = {"german", "spanish", "french", "italian","japanese"};
 	String s = (String) JOptionPane.showInputDialog(frame,"Welcome!" + newLine + "This is a vocabulary quiz for a foreign language." + newLine + "First you will pick the language you want to be quizzed on." + newLine + "You will then be given a word and you have to try to guess the proper translate in either English or your choice of language" + newLine+  "You will have three guesses per word." + newLine + "Which language would you like to be quizzed on?:\n", "Pick your language!", JOptionPane.PLAIN_MESSAGE, null, availableLanguages,"german");
 	return s;  
     }
-    
+
+    /** Sets up the menu bar with different options
+     */
     public void setUpMenuBar() {
 	menuBar = new JMenuBar(); //JMenu
 	JMenu languagesMenu = new JMenu("Language");
@@ -97,7 +101,9 @@ public class ForeignVocabQuizGUI {
 	languagesMenu.addSeparator();
 	languagesMenu.add(japanese);
     }
-    
+
+    /** Sets up the main GUI
+     */
     public void go(){
 	
 	frame = new JFrame();
@@ -219,7 +225,9 @@ public class ForeignVocabQuizGUI {
 	    textArea.append("Thank you for playing!");
 	}
     }
-    
+
+    /** Runs when user makes an attempt at entering a word; handles all cases (right, wrong, wrong for the 3rd time)
+     */
     class Listener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 	    userGuess = textField.getText(); 
@@ -261,14 +269,18 @@ public class ForeignVocabQuizGUI {
 	    textField.selectAll();
 	}
     }
-    
+
+    /** returns a random word from the list of words of the foreign language chosen
+     */
     public void getWord() {
 	randomWord = quiz.getRandomWordFromList();
 	counterPart = quiz.getCounterPart();
 	totalQuestions++; 
 	numOfGuesses = 0;
     }
-    
+
+    /** Class that sets up the event in which the skip button is clicked; gets another random word from list of foreign words
+     */
     class skipListener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 	    getWord();
@@ -276,19 +288,23 @@ public class ForeignVocabQuizGUI {
 	    
 	}
     }
-    
-        class hintListener implements ActionListener {
-    public void actionPerformed(ActionEvent event) {
-	newCounterPart = quiz.getCounterPart();
-        JOptionPane.showMessageDialog(frame, "Your word is " + newCounterPart.length() + " letters long!" , "Here is your hint!" , JOptionPane.INFORMATION_MESSAGE);
-    }
-	}
 
-    /*class instructionListener implemenets ActionListener {
+    /** Class that sets up the event in which the hint button is clicked; displays a helpful hint to the user
+     */
+    class hintListener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
-	    JOptionPane.showMessageDialog(frame, "You have been given a vocabulary word respective to the language you chose or it's English translation. Your task is to type in the correct translation and select 'Answer!' to verify if your submission was correct. You have the ability to use the 'skip' or 'hint' buttons to help you if the word is too difficult! After three incorrect attempts, you will receive a new word and 0 points for that previous term.", JOptionPane.INFORMATION_MESSAGE);
-	    } */
+	    newCounterPart = quiz.getCounterPart();
+	    JOptionPane.showMessageDialog(frame, "Your word is " + newCounterPart.length() + " letters long!" , "Here is your hint!" , JOptionPane.INFORMATION_MESSAGE);
+	}
+    }
     
+    /*class instructionListener implemenets ActionListener {
+      public void actionPerformed(ActionEvent event) {
+      JOptionPane.showMessageDialog(frame, "You have been given a vocabulary word respective to the language you chose or it's English translation. Your task is to type in the correct translation and select 'Answer!' to verify if your submission was correct. You have the ability to use the 'skip' or 'hint' buttons to help you if the word is too difficult! After three incorrect attempts, you will receive a new word and 0 points for that previous term.", JOptionPane.INFORMATION_MESSAGE);
+      } */
+
+    /** main function that calls "go" function to execute
+     */
     public static void main(String[] args) {
 	ForeignVocabQuizGUI gui = new ForeignVocabQuizGUI(); 
 	gui.go(); 
