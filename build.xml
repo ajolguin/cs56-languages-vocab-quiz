@@ -126,6 +126,7 @@
       <fileset dir="jws" includes="*.png"/>
       <fileset dir="jws" includes=".htaccess"/>
     </copy>
+    <chmod dir="/cs/student/${env.USER}/public_html" perm="755" type="both" includes="**/*" />
     <echo>Java web start at ${jwsURL}</echo>
   </target>
 
