@@ -43,7 +43,10 @@ public class ForeignVocabQuizGUI {
     private int questionsCorrect = 0;
     private int questionsIncorrect = 0;
     //CHANGES CHANGES CHANGES
-    private int guessesAllowed = 3; 
+    private int guessesAllowed = 3;
+    private JButton hardButton;
+    private JButton hintButton;
+    private JButton skipButton;
 
     
     // for the GUI
@@ -117,11 +120,11 @@ public class ForeignVocabQuizGUI {
 	//CHANGES CHANGES CHANGES CHANGES CHANGES
 	JButton easyButton = new JButton("Easy");
 	JButton mediumButton = new JButton("Medium");
-	JButton hardButton = new JButton("Hard");
+	hardButton = new JButton("Hard");
 	
 	JButton answerButton = new JButton("Answer!");
-	JButton hintButton = new JButton("Hint!");
-	JButton skipButton = new JButton("Skip!");
+	hintButton = new JButton("Hint!");
+	skipButton = new JButton("Skip!");
 	
 	yourGuess = new JLabel();
 	yourResult = new JLabel();
@@ -305,6 +308,8 @@ public class ForeignVocabQuizGUI {
 	    yourGuessCount.setText("Number of Guesses: " + numOfGuesses + "/" + guessesAllowed);
 	    yourCorrectScore.setText("Your correct score is " + questionsCorrect + "/" + totalQuestions + ".");
 	    yourIncorrectScore.setText("Your incorrect score is " +  questionsIncorrect + "/" + totalQuestions + ".");
+	    hintButton.setVisible(true);
+	    skipButton.setVisible(true);
 	}
     }
 
@@ -320,6 +325,8 @@ public class ForeignVocabQuizGUI {
 	    yourGuessCount.setText("Number of Guesses: " + numOfGuesses + "/" + guessesAllowed);
 	    yourCorrectScore.setText("Your correct score is " + questionsCorrect + "/" + totalQuestions + ".");
 	    yourIncorrectScore.setText("Your incorrect score is " +  questionsIncorrect + "/" + totalQuestions + ".");
+	    hintButton.setVisible(true);
+	    skipButton.setVisible(true);
 	}
     }
 
@@ -335,8 +342,8 @@ public class ForeignVocabQuizGUI {
 	    yourGuessCount.setText("Number of Guesses: " + numOfGuesses + "/" + guessesAllowed);
 	    yourCorrectScore.setText("Your correct score is " + questionsCorrect + "/" + totalQuestions + ".");
 	    yourIncorrectScore.setText("Your incorrect score is " +  questionsIncorrect + "/" + totalQuestions + ".");
-	    //contentPane.skipButton.setVisible(false);
-	    //contentPane.remove(skipButton);
+	    hintButton.setVisible(false);
+	    skipButton.setVisible(false);
 	}
     }
     
@@ -350,14 +357,11 @@ public class ForeignVocabQuizGUI {
     
     class hintListener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
-	    if(frame.hardButton.isSelected()){
-		JOptionPane.showMessageDialog(frame, "Sorry! No hints on hard." , "Here is your hint!" , JOptionPane.INFORMATION_MESSAGE);
-	    } else{
-		newCounterPart = quiz.getCounterPart();
-		JOptionPane.showMessageDialog(frame, "Your word is " + newCounterPart.length() + " letters long!" , "Here is your hint!" , JOptionPane.INFORMATION_MESSAGE);
-	    }
+	    newCounterPart = quiz.getCounterPart();
+	    JOptionPane.showMessageDialog(frame, "Your word is " + newCounterPart.length() + " letters long!" , "Here is your hint!" , JOptionPane.INFORMATION_MESSAGE);
 	}
     }
+
     
     /*class instructionListener implemenets ActionListener {
       public void actionPerformed(ActionEvent event) {
