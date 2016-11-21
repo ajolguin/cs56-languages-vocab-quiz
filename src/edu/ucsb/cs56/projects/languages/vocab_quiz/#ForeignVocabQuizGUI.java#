@@ -350,7 +350,7 @@ public class ForeignVocabQuizGUI {
     
     class hintListener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
-	    if(frame.hardButton.isSelected()){
+	    if(this.frame.hardButton.isSelected()){
 		JOptionPane.showMessageDialog(frame, "Sorry! No hints on hard." , "Here is your hint!" , JOptionPane.INFORMATION_MESSAGE);
 	    } else{
 		newCounterPart = quiz.getCounterPart();
