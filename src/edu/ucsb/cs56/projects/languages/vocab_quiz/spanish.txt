@@ -13,7 +13,7 @@ cousin
 abuela
 grandmother
 abuelo
-granfather
+grandfather
 sobrina
 niece
 suegra

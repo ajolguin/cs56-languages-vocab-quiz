@@ -28,6 +28,7 @@ public class ForeignVocabQuizGUI {
     private JLabel quizWord;
     private JLabel yourCorrectScore;
     private JLabel yourIncorrectScore;
+    private JLabel yourGuessCount;
     
     private String userGuess;
     private String randomWord; 
@@ -124,10 +125,11 @@ public class ForeignVocabQuizGUI {
 	
 	yourGuess = new JLabel();
 	yourResult = new JLabel();
-	quizWord = new JLabel("The word is: "); //
+	quizWord = new JLabel("The word is: "); 
 	JLabel quizLanguage = new JLabel("Current language being tested on: ");
 	yourCorrectScore = new JLabel("Questions correct: " + questionsCorrect);
 	yourIncorrectScore = new JLabel("Questions incorrect: " + questionsIncorrect);
+	yourGuessCount = new JLabel("Number of Guesses: " + numOfGuesses);
 	
 	JPanel northPanel = new JPanel();
 	JPanel centerPanel = new JPanel();
@@ -147,7 +149,8 @@ public class ForeignVocabQuizGUI {
 	centerPanel.add(yourGuess);
 	centerPanel.add(yourResult);
 	centerPanel.add(yourCorrectScore);
-	centerPanel.add(yourIncorrectScore); 
+	centerPanel.add(yourIncorrectScore);
+	centerPanel.add(yourGuessCount);
 	
 	eastPanel.add(hintButton);
 	eastPanel.add(skipButton);
@@ -175,7 +178,7 @@ public class ForeignVocabQuizGUI {
 	
 	while(quiz.listNotEmpty()) {    
 	    
-	    numOfGuesses = 1;
+	    numOfGuesses = 0;
 	    
 	    randomWord = quiz.getRandomWordFromList();
 	    counterPart = quiz.getCounterPart();
@@ -232,16 +235,18 @@ public class ForeignVocabQuizGUI {
 	public void actionPerformed(ActionEvent event) {
 	    userGuess = textField.getText(); 
 	    yourGuess.setText("You guessed: " + userGuess + ".");
+	    numOfGuesses++;
 	    
 	    if(quiz.checkUserGuess(userGuess)){
 		newRandomWord = quiz.getRandomWordFromList();
-		newCounterPart = quiz.getCounterPart(); 
+		newCounterPart = quiz.getCounterPart();
 		quizWord.setText("Your word is: " + newRandomWord);
 		textField.setText("");
 		yourResult.setText("Correct!");
 		questionsCorrect++;
 		totalQuestions++;
-		numOfGuesses = 1;
+		numOfGuesses = 0;
+		yourGuessCount.setText("Number of Guesses: " + numOfGuesses);
 	    }
 
 	    else {
@@ -256,10 +261,12 @@ public class ForeignVocabQuizGUI {
 		    questionsIncorrect++;
 		    totalQuestions++;
 		    numOfGuesses = 0;
+		    yourGuessCount.setText("Number of Guesses: " + numOfGuesses);
 		}
 		else
 		    yourResult.setText("Incorrect! Try again");
-		numOfGuesses++;
+		yourGuessCount.setText("Number of Guesses: " + numOfGuesses);
+		
 	    }
   
 
