@@ -61,10 +61,15 @@ public class ForeignVocabQuiz{
 	}
     }
 
+    /** Check to see if the list is not empty; return true if it is not
+     */
     public boolean listNotEmpty(){
 	return !vocabList.isEmpty();
     }
 
+    /** Gets the translation of the current word, either the english or foreign counterpart, as a string object
+     *@return <code>counterPart<String></code>.
+     */
     public String getCounterPart(){
 	return counterPart;
     }
@@ -128,6 +133,9 @@ public class ForeignVocabQuiz{
 	return false;
     }
 
+    /** Gets the current language being tested on
+     *@return <code>testLanguage<String></code>
+     */
     public String getLanguage(){
 	return testLanguage;
     }
