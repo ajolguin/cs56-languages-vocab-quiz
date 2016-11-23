@@ -8,9 +8,9 @@ import javax.swing.*;
 /**
    A GUI for ForeignVocabQuiz.
    
-   @author Dane Pitkin
-   @author Yessenia Valencia
-   @version cs56-languages-vocab-quiz, CS56, W16
+   @author Adrian Olguin
+   @author Cristobal Caballero
+   @version cs56-languages-vocab-quiz, CS56, F16
    @see ForeignVocabQuiz
 */
 
@@ -25,26 +25,30 @@ public class ForeignVocabQuizGUI {
     private JLabel yourGuess;
     // private JLabel numGuesses; 
     private JLabel yourResult; 
-    // private JLabel quizWord; 
-    // private JLabel yourCorrectScore;
-    // private JLabel yourIncorrectScore;
+    private JLabel quizWord;
+    private JLabel yourCorrectScore;
+    private JLabel yourIncorrectScore;
     
     private String userGuess;
     private String randomWord; 
     private String counterPart;
     private String myLanguage;
+
+    private String newRandomWord;
+    private String newCounterPart;
     
-    private int numOfGuesses = 0 ;
-    private int totalQuestions = 1; 
+    private int numOfGuesses = 0;
+    private int totalQuestions = 0; 
     private int questionsCorrect = 0;
     private int questionsIncorrect = 0; 
-    
+
     
     // for the GUI
     
     private JFrame frame; 
     private JMenuBar menuBar;
     private JTextField textField;
+  
     
     
     /**Constructor:
@@ -57,13 +61,17 @@ public class ForeignVocabQuizGUI {
 	quiz = new ForeignVocabQuiz(this.pickLanguage());
     }
     
-    
+    /** Sets up a string with instructions on how to play the quiz
+     *@return <code>s<String></code> where s contains lines of instruction
+     */
     public String pickLanguage() {
 	String[] availableLanguages = {"german", "spanish", "french", "italian","japanese"};
 	String s = (String) JOptionPane.showInputDialog(frame,"Welcome!" + newLine + "This is a vocabulary quiz for a foreign language." + newLine + "First you will pick the language you want to be quizzed on." + newLine + "You will then be given a word and you have to try to guess the proper translate in either English or your choice of language" + newLine+  "You will have three guesses per word." + newLine + "Which language would you like to be quizzed on?:\n", "Pick your language!", JOptionPane.PLAIN_MESSAGE, null, availableLanguages,"german");
 	return s;  
     }
-    
+
+    /** Sets up the menu bar with different options
+     */
     public void setUpMenuBar() {
 	menuBar = new JMenuBar(); //JMenu
 	JMenu languagesMenu = new JMenu("Language");
@@ -93,7 +101,9 @@ public class ForeignVocabQuizGUI {
 	languagesMenu.addSeparator();
 	languagesMenu.add(japanese);
     }
-    
+
+    /** Sets up the main GUI
+     */
     public void go(){
 	
 	frame = new JFrame();
@@ -114,10 +124,10 @@ public class ForeignVocabQuizGUI {
 	
 	yourGuess = new JLabel();
 	yourResult = new JLabel();
-	JLabel quizWord = new JLabel("The word is: ");
+	quizWord = new JLabel("The word is: "); //
 	JLabel quizLanguage = new JLabel("Current language being tested on: ");
-	JLabel yourCorrectScore = new JLabel("Questions correct: " + questionsCorrect);
-	JLabel yourIncorrectScore = new JLabel("Questions incorrect: " + questionsIncorrect);
+	yourCorrectScore = new JLabel("Questions correct: " + questionsCorrect);
+	yourIncorrectScore = new JLabel("Questions incorrect: " + questionsIncorrect);
 	
 	JPanel northPanel = new JPanel();
 	JPanel centerPanel = new JPanel();
@@ -135,7 +145,6 @@ public class ForeignVocabQuizGUI {
 	northPanel.add(answerButton);
 	
 	centerPanel.add(yourGuess);
-	//	centerPanel.add(numGuesses); 
 	centerPanel.add(yourResult);
 	centerPanel.add(yourCorrectScore);
 	centerPanel.add(yourIncorrectScore); 
@@ -166,7 +175,7 @@ public class ForeignVocabQuizGUI {
 	
 	while(quiz.listNotEmpty()) {    
 	    
-	    numOfGuesses = 0;
+	    numOfGuesses = 1;
 	    
 	    randomWord = quiz.getRandomWordFromList();
 	    counterPart = quiz.getCounterPart();
@@ -182,14 +191,19 @@ public class ForeignVocabQuizGUI {
 	    while(quiz.checkUserGuess(userGuess) == false){
 		if(numOfGuesses == 3) {
 		    questionsIncorrect++;
-		    /* mine */   //yourIncorrectScore.setText("Your incorrect score is " +  questionsIncorrect + "/" + totalQuestions + ".");	    
 		    break;
 		}
 	    }
+
+	    /*if(skipButton.isSelected()){
+		randomWord = quiz.getRandomWordFromList();
+		counterPart = quiz.getCounterPart();
+		quizWord.setText("Your word is: " + randomWord);
+		numOfGuesses = 0;
+		}*/
 	    
 	    if(quiz.checkUserGuess(userGuess) == true){ 
 		questionsCorrect++;
-		/* my */	//yourCorrectScore.setText("Your correct score is " + questionsCorrect + "/" + totalQuestions + ".");
 	    }
 	    
 	    numOfGuesses = 0;
@@ -211,49 +225,86 @@ public class ForeignVocabQuizGUI {
 	    textArea.append("Thank you for playing!");
 	}
     }
-    
+
+    /** Runs when user makes an attempt at entering a word; handles all cases (right, wrong, wrong for the 3rd time)
+     */
     class Listener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 	    userGuess = textField.getText(); 
 	    yourGuess.setText("You guessed: " + userGuess + ".");
-	    // numGuesses.setText("Number of guesses: " + numOfGuesses + "."); 
 	    
-	    //if(numOfGuesses < 3){
-	    if(quiz.checkUserGuess(userGuess))
+	    if(quiz.checkUserGuess(userGuess)){
+		newRandomWord = quiz.getRandomWordFromList();
+		newCounterPart = quiz.getCounterPart(); 
+		quizWord.setText("Your word is: " + newRandomWord);
+		textField.setText("");
 		yourResult.setText("Correct!");
+		questionsCorrect++;
+		totalQuestions++;
+		numOfGuesses = 1;
+	    }
 
 	    else {
-		if(numOfGuesses == 2)
-		    yourResult.setText("The correct answer was: " + counterPart);
+		newCounterPart = quiz.getCounterPart();
+		if(numOfGuesses == 3){
+		    textField.setText("");
+		    yourResult.setText("The correct answer was: " + newCounterPart);
+		    newRandomWord = quiz.getRandomWordFromList();
+		    newCounterPart = quiz.getCounterPart();
+
+		    quizWord.setText("Your word is: " + newRandomWord);
+		    questionsIncorrect++;
+		    totalQuestions++;
+		    numOfGuesses = 0;
+		}
 		else
 		    yourResult.setText("Incorrect! Try again");
 		numOfGuesses++;
 	    }
-	    
+  
+
+	    yourCorrectScore.setText("Your correct score is " + questionsCorrect + "/" + totalQuestions + ".");
+	    yourIncorrectScore.setText("Your incorrect score is " +  questionsIncorrect + "/" + totalQuestions + ".");
 	    textField.requestFocus();
 	    textField.selectAll();
 	}
     }
-    
+
+    /** returns a random word from the list of words of the foreign language chosen
+     */
     public void getWord() {
 	randomWord = quiz.getRandomWordFromList();
 	counterPart = quiz.getCounterPart();
 	totalQuestions++; 
 	numOfGuesses = 0;
     }
-    
+
+    /** Class that sets up the event in which the skip button is clicked; gets another random word from list of foreign words
+     */
     class skipListener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
-	    getWord(); 
+	    getWord();
+	    quizWord.setText("Your word is: " + randomWord);
+	    
 	}
     }
-    
+
+    /** Class that sets up the event in which the hint button is clicked; displays a helpful hint to the user
+     */
     class hintListener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
-	    JOptionPane.showMessageDialog(frame, "Your word is " + counterPart.length() + " letters long!" , "Here is your hint!" , JOptionPane.INFORMATION_MESSAGE);
+	    newCounterPart = quiz.getCounterPart();
+	    JOptionPane.showMessageDialog(frame, "Your word is " + newCounterPart.length() + " letters long!" , "Here is your hint!" , JOptionPane.INFORMATION_MESSAGE);
 	}
     }
     
+    /*class instructionListener implemenets ActionListener {
+      public void actionPerformed(ActionEvent event) {
+      JOptionPane.showMessageDialog(frame, "You have been given a vocabulary word respective to the language you chose or it's English translation. Your task is to type in the correct translation and select 'Answer!' to verify if your submission was correct. You have the ability to use the 'skip' or 'hint' buttons to help you if the word is too difficult! After three incorrect attempts, you will receive a new word and 0 points for that previous term.", JOptionPane.INFORMATION_MESSAGE);
+      } */
+
+    /** main function that calls "go" function to execute
+     */
     public static void main(String[] args) {
 	ForeignVocabQuizGUI gui = new ForeignVocabQuizGUI(); 
 	gui.go(); 
