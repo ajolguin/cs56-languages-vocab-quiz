@@ -63,5 +63,5 @@ To start the game, use `ant run`.
 
 * The toolbar elements still do not have any functionality and images have yet to be incorporated into the GUI
 * More words have been added to each language .txt file, however there is a bug in which it does not read in all of the new words. Additionally, the output of ForeignVocabOuput used by 'ant ouput' does not print out all words in these .txt files/ 
-* The program itself now runs well, difficulties have been added after selecting a language but consider applhying this option to the main page of the GUI so that the user can choose the language and difficulty of their preference simultaneously.
+* The program itself now runs well, difficulties have been added after selecting a language but consider applying this option to the main page of the GUI so that the user can choose the language and difficulty of their preference simultaneously.
 * Lots of refactoring can be done to ForeignVocabQuizGUI in the go() method, the while loops and if statements in lines 192-243 seem to only execute once then become unneccessary afterwards. This can be refactored, comments can now be removed, and consider creating a helper method to be used in the actionListeners that gets a new word and its counterpart so that code isn't repeated.
