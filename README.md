@@ -1,6 +1,6 @@
 # cs56-languages-vocab-quiz
 
-W16 ready! (Yessenia Valencia)
+F16 ready! (Adrian Olguin, Cristobal Caballero)
 
 This is a foreign language quiz that has now been updated to test German, Spanish, French, Italian, and Japanese vocabulary. It is abstracted in such a way so that it could be adapted to other languages, but currently it only tests from any one of those languages to English and from English to that chosen language.
 
@@ -58,3 +58,10 @@ To start the game, use `ant run`.
 * The toolbar elements do not have any functionality at the moment so clicking would not initiate anything
 * ForeignVocabOutput was added to show output of the file being read in FileRead to make sure all the terms are present and being added to ArrayList
 * There is an images folder of .gif files that I was not able to add to GUI, disregard these at your discretion. 
+
+## F16 Final Remarks
+
+* The toolbar elements still do not have any functionality and images have yet to be incorporated into the GUI
+* More words have been added to each language .txt file, however there is a bug in which it does not read in all of the new words. Additionally, the output of ForeignVocabOuput used by 'ant ouput' does not print out all words in these .txt files/ 
+* The program itself now runs well, difficulties have been added after selecting a language but consider applhying this option to the main page of the GUI so that the user can choose the language and difficulty of their preference simultaneously.
+* Lots of refactoring can be done to ForeignVocabQuizGUI in the go() method, the while loops and if statements in lines 192-243 seem to only execute once then become unneccessary afterwards. This can be refactored, comments can now be removed, and consider creating a helper method to be used in the actionListeners that gets a new word and its counterpart so that code isn't repeated.
