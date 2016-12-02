@@ -10,6 +10,9 @@ public class ForeignVocabOutput {
     private FileRead japanese;
     private ForeignVocabQuiz spanishQuiz;
     private ForeignVocabQuiz germanQuiz;
+
+    /** prints words from each languages file containing all the words
+     */
     
     public void go() {
 	german = new FileRead("german");
@@ -44,6 +47,8 @@ public class ForeignVocabOutput {
         
     }
 
+    /** main function that calls "go" function
+     */
     public static void main(String [] args) {
 	ForeignVocabOutput output = new ForeignVocabOutput();
 	output.go();

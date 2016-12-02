@@ -62,16 +62,23 @@ public class FileRead {
     /** Gets name of .txt file from the user.
      *At the moment, it's just hardcoded in.
      *Not good programming syle.
+     *@return String object containing the file name
      */
     
     public String getFileName(){
 	return filename; 
     }
 
+    /** Gets URL of file in use
+     *@return URL object 
+     */
     public URL getFileURL() {
 	return fileURL;
     }
 
+    /** Gets file that will be read from
+     *@return File object 
+     */
     public File getFiletoRead() {
 	return fileFile;
     }
@@ -115,6 +122,9 @@ public class FileRead {
 	//e.printStackTrace();
 	//  }
     }
+
+    /** prints out lines from specified file
+     */
     public void printFromFile(){
 	try {
 	    BufferedReader br = new BufferedReader(new FileReader(fileFile));
