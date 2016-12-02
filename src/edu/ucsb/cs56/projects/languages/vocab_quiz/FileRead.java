@@ -83,6 +83,10 @@ public class FileRead {
 	return fileFile;
     }
 
+    /** Sets variable fileName and updates
+	fileURL and fileFile accordingly
+    */
+    
     public void setFileName(String newName) {
 	filename = "" + newName + ".txt"; ;
 	fileURL = getClass().getResource(filename);

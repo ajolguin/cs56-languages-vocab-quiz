@@ -2,6 +2,12 @@ package edu.ucsb.cs56.projects.languages.vocab_quiz;
 import java.io.*;
 import java.util.*;
 
+/**An output file that outputs all of the words read in from a .txt language file
+ *@author Adrian Olguin
+ *@author Cristobal Caballero
+ *@version cs56-languages-vocab-quiz, CS56, F16
+ */
+
 public class ForeignVocabOutput {
     private FileRead german;
     private FileRead spanish;
